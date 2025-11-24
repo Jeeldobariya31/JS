@@ -3,7 +3,7 @@
 // FUNCTIONS with ARRAYS + OBJECTS (Easy + Complete)
 // ===================================================================
 
-console.log("\n📂 Loaded: 06_function_with_array_and_object.js\n");
+console.log("\n📂 Loaded: 02_function_with_array_and_object.js\n");
 
 // ===================================================================
 // 1️⃣ Function that takes an ARRAY as input
