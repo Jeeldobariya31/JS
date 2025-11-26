@@ -35,8 +35,8 @@ const noArg = () => "no args";
 const oneArg = (x) => x * 2; // parentheses optional for single param
 console.log("A.4:", noArg(), oneArg(7));
 
-// A.5 Returning object literal (wrap in parentheses)
-const makeObj = (n) => ({ name: n, time: Date.now() });
+// A.5 Returning object literal (wrap in parentheses)   👈 Note For Interview
+const makeObj = (n) => ({ name: n, time: Date.now() }); 
 console.log("A.5 return object:", makeObj("Jeel"));
 
 // A.6 Rest parameters (useful because `arguments` not available)
