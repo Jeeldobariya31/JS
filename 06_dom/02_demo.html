@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- ✅ Standard HTML5 Head -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DOM Reference Demo - Jeel</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1,
+    h2 {
+      color: #333;
+    }
+
+    .section {
+      background: #ffffff;
+      padding: 16px;
+      margin-bottom: 16px;
+      border-radius: 8px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+    }
+
+    .demo-box {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-top: 8px;
+    }
+
+    .btn {
+      padding: 6px 12px;
+      border: none;
+      background: #1976d2;
+      color: #fff;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 6px;
+      margin-right: 6px;
+    }
+
+    .btn:hover {
+      opacity: 0.9;
+    }
+
+    .highlight {
+      background: #fff9c4;
+    }
+
+    ul.demo-list {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    ul.demo-list li {
+      padding: 4px 6px;
+      border-bottom: 1px solid #eee;
+    }
+
+    #event-log {
+      margin-top: 8px;
+      min-height: 24px;
+      background: #e8f5e9;
+      padding: 6px;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+
+    code {
+      background: #eee;
+      padding: 1px 4px;
+      border-radius: 3px;
+      font-size: 13px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>DOM Reference Demo (Jeel)</h1>
+  <p>Open DevTools → Console for logs from <code>01_dom_reference.js</code>.</p>
+
+  <!-- =========================================================================
+         1️⃣ document OBJECT DEMO
+    ========================================================================= -->
+  <section class="section" id="sec-document">
+    <h2>1. document Object Demo</h2>
+    <p>
+      Shows <code>document.title</code>, <code>document.URL</code>, etc. from
+      JS.
+    </p>
+    <div id="doc-info" class="demo-box">
+      <strong>Document Info:</strong>
+      <div id="doc-title-line"></div>
+      <div id="doc-url-line"></div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+         2️⃣ SELECTORS DEMO
+    ========================================================================= -->
+  <section class="section" id="sec-selectors">
+    <h2>2. Selectors Demo</h2>
+    <p>
+      Using <code>getElementById</code>, <code>querySelector</code>,
+      <code>querySelectorAll</code>.
+    </p>
+    <ul id="sel-list" class="demo-list">
+      <li class="sel-item">Apple</li>
+      <li class="sel-item special">Banana (special)</li>
+      <li class="sel-item">Cherry</li>
+    </ul>
+    <button id="btn-highlight-special" class="btn">
+      Highlight ".special"
+    </button>
+  </section>
+
+  <!-- =========================================================================
+         3️⃣ CONTENT & VALUE PROPERTIES DEMO
+    ========================================================================= -->
+  <section class="section" id="sec-content">
+    <h2>3. Content & Value Demo</h2>
+    <p>textContent, innerHTML, value, href, etc.</p>
+    <h3 id="content-heading">Original Heading</h3>
+    <p id="content-para">
+      This paragraph will be updated using <code>innerHTML</code>.
+    </p>
+    <input id="content-input" type="text" value="Default text in input" />
+    <br />
+    <a id="content-link" href="https://example.com" target="_blank" title="Example link">
+      Go to example.com
+    </a>
+    <br />
+    <button id="btn-update-content" class="btn">
+      Update Content via JS
+    </button>
+  </section>
+
+  <!-- =========================================================================
+         4️⃣ ATTRIBUTES & DATASET DEMO
+    ========================================================================= -->
+  <section class="section" id="sec-attributes">
+    <h2>4. Attributes & dataset Demo</h2>
+    <p>getAttribute, setAttribute, dataset.</p>
+    <img id="attr-img" src="https://via.placeholder.com/80" alt="Avatar" data-user-id="101" data-role="user" />
+    <div id="attr-output" class="demo-box"></div>
+    <button id="btn-attr-change" class="btn">
+      Change src & show dataset
+    </button>
+  </section>
+
+  <!-- =========================================================================
+         5️⃣ CLASSES & STYLE DEMO
+    ========================================================================= -->
+  <section class="section" id="sec-classes">
+    <h2>5. classList & style Demo</h2>
+    <p>className, classList.add/remove/toggle, style.*</p>
+    <div id="class-box" class="demo-box">
+      This box will have its class and style changed.
+    </div>
+    <button id="btn-toggle-class" class="btn">
+      Toggle Highlight Class
+    </button>
+  </section>
+
+  <!-- =========================================================================
+         6️⃣ TRAVERSAL DEMO
+    ========================================================================= -->
+  <section class="section" id="sec-traversal">
+    <h2>6. Traversal Demo (parent / children / siblings)</h2>
+    <div id="trav-root" class="demo-box">
+      Root
+      <div class="child-box" id="trav-child-1">
+        Child 1
+        <div class="child-box" id="trav-child-1-1">Child 1.1</div>
+      </div>
+      <div class="child-box" id="trav-child-2">Child 2</div>
+    </div>
+    <button id="btn-trav-log" class="btn">
+      Log Traversal Info
+    </button>
+  </section>
+
+  <!-- =========================================================================
+         7️⃣ MUTATION DEMO
+    ========================================================================= -->
+  <section class="section" id="sec-mutation">
+    <h2>7. Mutation Demo (create / insert / remove)</h2>
+    <ul id="mut-list" class="demo-list">
+      <li>Existing Item 1</li>
+      <li>Existing Item 2</li>
+    </ul>
+    <button id="btn-mut-add" class="btn">Add Item</button>
+    <button id="btn-mut-insert" class="btn">Insert at Top</button>
+    <button id="btn-mut-remove" class="btn">Remove Last</button>
+  </section>
+
+  <!-- =========================================================================
+         8️⃣ EVENTS DEMO
+    ========================================================================= -->
+  <section class="section" id="sec-events">
+    <h2>8. Events Demo</h2>
+    <button id="ev-click-btn" class="btn">Click Me</button>
+    <input id="ev-input" type="text" placeholder="Type here..." />
+    <div id="event-log">Event log will appear here.</div>
+  </section>
+
+  <!-- ======================================================================
+         JS: Reference (theory) + Demo (practical)
+    ====================================================================== -->
+  <!-- Your reference cheat sheet (theory only, logs in console) -->
+  <script src="01_dom_theory.js" defer></script>
+  <!-- Practical demos for this HTML page -->
+  <script src="03_demo.js" defer></script>
+</body>
+
+</html>
