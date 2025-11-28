@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Stylish List App</title>
+
+        <style>
+                body {
+                        font-family: Arial, sans-serif;
+                        background: #f4f6f9;
+                        margin: 0;
+                        padding: 40px;
+                        display: flex;
+                        justify-content: center;
+                }
+
+                .container {
+                        width: 400px;
+                        background: #ffffff;
+                        padding: 25px;
+                        border-radius: 12px;
+                        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+                }
+
+                h2 {
+                        margin-top: 0;
+                        text-align: center;
+                        color: #333;
+                }
+
+                ul {
+                        padding: 0;
+                        margin: 20px 0;
+                        list-style: none;
+                }
+
+                ul li {
+                        background: #fafafa;
+                        padding: 12px;
+                        margin-bottom: 8px;
+                        border-radius: 6px;
+                        font-size: 16px;
+                        border-left: 4px solid #4a90e2;
+                        transition: 0.2s;
+                }
+
+                ul li:hover {
+                        background: #eef5ff;
+                        transform: translateX(5px);
+                }
+
+                #input {
+                        width: calc(100% - 90px);
+                        padding: 10px;
+                        border: 2px solid #4a90e2;
+                        border-radius: 6px;
+                        font-size: 15px;
+                        outline: none;
+                }
+
+                button {
+                        padding: 10px 18px;
+                        background: #4a90e2;
+                        color: white;
+                        border: none;
+                        border-radius: 6px;
+                        font-size: 15px;
+                        cursor: pointer;
+                        transition: 0.25s;
+                }
+
+                button:hover {
+                        background: #357ad4;
+                }
+
+                .input-row {
+                        display: flex;
+                        justify-content: space-between;
+                }
+        </style>
+</head>
+
+<body>
+
+        <div class="container">
+                <h2>📌 Add Items to List</h2>
+
+                <ul class="myul">
+                        <li>Sample Item</li>
+                </ul>
+
+                <div class="input-row">
+                        <input id="input" type="text" placeholder="Enter Value...">
+                        <button onclick="add()">Add</button>
+                </div>
+        </div>
+
+        <script>
+        //simple way  in case of many ele this heavy to dom
+                function add() {
+                        let text = document.getElementById("input").value;
+
+                        if (text.trim() === "") {
+                                alert("Enter a value!");
+                                return;
+                        }
+                        const li = document.createElement('li');
+                        li.innerHTML = text;
+                         document.getElementsByClassName("myul")[0].appendChild(li);
+                        document.getElementById("input").value = "";
+                }
+                // optimize way
+                function addopt(){
+                         let text = document.getElementById("input").value;
+                         if (text.trim() === "") {
+                                alert("Enter a value!");
+                                return;
+                        }
+                        const li = document.createElement('li');
+                        li.appendChild(document.createTextNode(text))
+                         document.getElementsByClassName("myul")[0].appendChild(li);
+                        document.getElementById("input").value = "";
+                }
+        </script>
+
+</body>
+
+</html>

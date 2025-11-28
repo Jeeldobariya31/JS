@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Stylish CRUD App</title>
+
+        <style>
+                body {
+                        font-family: "Poppins", Arial, sans-serif;
+                        background: #eef2f7;
+                        margin: 0;
+                        padding: 40px;
+                        display: flex;
+                        justify-content: center;
+                }
+
+                .container {
+                        width: 600px;
+                        background: #ffffff;
+                        padding: 25px;
+                        border-radius: 14px;
+                        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+                }
+
+                h2 {
+                        margin-top: 0;
+                        text-align: center;
+                        color: #333;
+                        font-weight: 600;
+                }
+
+                .form-row {
+                        display: flex;
+                        gap: 10px;
+                        margin-bottom: 20px;
+                }
+
+                input {
+                        flex: 1;
+                        padding: 12px;
+                        border: 2px solid #4a90e2;
+                        border-radius: 6px;
+                        outline: none;
+                        font-size: 14px;
+                        transition: 0.2s;
+                }
+
+                input:focus {
+                        border-color: #2c6fc7;
+                        box-shadow: 0 0 6px #7db6ff;
+                }
+
+                .btn {
+                        padding: 12px 18px;
+                        border: none;
+                        background: #4a90e2;
+                        color: white;
+                        border-radius: 6px;
+                        font-size: 14px;
+                        cursor: pointer;
+                        transition: 0.25s;
+                }
+
+                .btn:hover {
+                        background: #3476c8;
+                        transform: translateY(-1px);
+                }
+
+                #updateBtn {
+                        background: #ff9800;
+                }
+
+                #updateBtn:hover {
+                        background: #e68900;
+                }
+
+                table {
+                        width: 100%;
+                        border-collapse: collapse;
+                        margin-top: 20px;
+                        background: #fff;
+                        border-radius: 10px;
+                        overflow: hidden;
+                }
+
+                th {
+                        background: #4a90e2;
+                        color: white;
+                        padding: 12px;
+                        font-size: 16px;
+                }
+
+                td {
+                        padding: 12px;
+                        font-size: 14px;
+                        border-bottom: 1px solid #eee;
+                }
+
+                tr:hover {
+                        background: #f5faff;
+                }
+
+                .action-btn {
+                        padding: 6px 12px;
+                        border: none;
+                        border-radius: 5px;
+                        color: white;
+                        cursor: pointer;
+                        font-size: 12px;
+                }
+
+                .edit {
+                        background: #ff9800;
+                }
+
+                .delete {
+                        background: #e53935;
+                }
+
+                .edit:hover {
+                        background: #d48806;
+                }
+
+                .delete:hover {
+                        background: #c62828;
+                }
+        </style>
+
+</head>
+
+<body>
+
+        <div class="container">
+
+                <h2>📌 Stylish CRUD App</h2>
+
+                <!-- Input Form -->
+                <div class="form-row">
+                        <input type="text" id="name" placeholder="Enter Name">
+                        <input type="number" id="age" placeholder="Enter Age">
+                </div>
+
+                <div style="text-align: center;">
+                        <button class="btn" id="addBtn">Add</button>
+                        <button class="btn" id="updateBtn" style="display:none;">Update</button>
+                </div>
+
+                <!-- CRUD Table -->
+                <table>
+                        <thead>
+                                <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Age</th>
+                                        <th>Actions</th>
+                                </tr>
+                        </thead>
+                        <tbody id="table-body"></tbody>
+                </table>
+
+        </div>
+
+        <script src="main.js"></script>
+
+</body>
+
+</html>
