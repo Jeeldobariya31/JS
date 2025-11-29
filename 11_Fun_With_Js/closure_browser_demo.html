@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+</head>
+<body>
+        <title>Simple Closure Color Demo</title>
+        <style>
+                body {
+                        font-family: Arial, sans-serif;
+                        padding: 30px;
+                        background: #f7f9fc;
+                }
+
+                .box {
+                        width: 120px;
+                        height: 120px;
+                        border-radius: 10px;
+                        background: #ddd;
+                        margin-bottom: 20px;
+                        transition: .3s;
+                }
+
+                button {
+                        padding: 8px 16px;
+                        margin-right: 10px;
+                        border: none;
+                        border-radius: 5px;
+                        cursor: pointer;
+                        font-size: 14px;
+                        background: #4a90e2;
+                        color: #fff;
+                }
+
+                button:hover {
+                        background: #357ad4;
+                }
+        </style>
+</head>
+
+<body>
+
+        <h2>🎨 Simple Closure Color Demo</h2>
+        <p>Each button has its own private color stored using closure.</p>
+
+        <div class="box" id="color-box"></div>
+
+        <button id="btn-red">Red</button>
+        <button id="btn-green">Green</button>
+        <button id="btn-blue">Blue</button>
+
+        <script>
+                // --------------------------------------------
+                // 🔥 CLOSURE FACTORY → returns a function that
+                //    remembers its own color
+                // --------------------------------------------
+                function makeColorChanger(color) {
+                        return function () {
+                                // closure remembers color variable
+                                const box = document.getElementById("color-box");
+                                box.style.background = color;
+                                console.log("Box changed to:", color);
+                        };
+                }
+
+                // Creating closure-based functions
+                const redChanger = makeColorChanger("red");
+                const greenChanger = makeColorChanger("green");
+                const blueChanger = makeColorChanger("blue");
+
+                // Bind closures to buttons
+                document.getElementById("btn-red").addEventListener("click", redChanger);
+                document.getElementById("btn-green").addEventListener("click", greenChanger);
+                document.getElementById("btn-blue").addEventListener("click", blueChanger);
+        </script>
+
+</body>
+
+</html>
