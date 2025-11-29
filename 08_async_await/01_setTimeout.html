@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Set Timeout Demo</title>
+        <style>
+                body {
+                        font-family: Arial, sans-serif;
+                        background: #f4f6f9;
+                        padding: 30px;
+                }
+
+                .box {
+                        background: #fff;
+                        padding: 16px;
+                        border-radius: 10px;
+                        margin-bottom: 16px;
+                        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+                }
+
+                button {
+                        padding: 8px 14px;
+                        border-radius: 6px;
+                        border: none;
+                        background: #4a90e2;
+                        color: #fff;
+                        cursor: pointer;
+                        margin: 4px;
+                }
+
+                button:hover {
+                        background: #357ad4;
+                }
+
+                #log {
+                        background: #111;
+                        color: #0f0;
+                        padding: 10px;
+                        border-radius: 6px;
+                        min-height: 80px;
+                        font-family: Consolas, monospace;
+                        white-space: pre-wrap;
+                        overflow-y: auto;
+                }
+        </style>
+</head>
+
+<body>
+        <h1>⏰ setTimeout in JavaScript (Full Demo + Theory)</h1>
+
+        <div class="box">
+                <h2>1️⃣ Basic setTimeout & clearTimeout</h2>
+                <button id="startTimeout">Start 3s Timeout</button>
+                <button id="cancelTimeout">Cancel Timeout</button>
+                <p id="status">Status: No timeout scheduled.</p>
+        </div>
+
+        <div class="box">
+                <h2>2️⃣ setTimeout with 0 ms (Event Loop Demo)</h2>
+                <button id="zeroTimeoutBtn">Run 0ms setTimeout Demo</button>
+        </div>
+
+        <div class="box">
+                <h2>📜 Log</h2>
+                <div id="log"></div>
+        </div>
+
+        <script>
+                // =====================================================================
+                // 📘 setTimeout — Full Theory
+                // =====================================================================
+                /*
+                setTimeout(fn, delay, ...args)
+                --------------------------------
+                - Schedules a function (fn) to run AFTER delay milliseconds.
+                - It does NOT stop the code. JavaScript continues executing.
+                - When delay is over, callback is pushed into "task queue" and
+                  runs when call stack is free (Event Loop concept).
+            
+                Syntax:
+                  const id = setTimeout(callback, delay, arg1, arg2, ...);
+            
+                To cancel:
+                  clearTimeout(id);
+            
+                Important points:
+                -----------------
+                - delay is MINIMUM time, not guaranteed exact.
+                - setTimeout(fn, 0) → runs AFTER current call stack (async).
+                - Returns a timeout ID (number) used in clearTimeout().
+                */
+
+                const logBox = document.getElementById("log");
+                const statusText = document.getElementById("status");
+                const startBtn = document.getElementById("startTimeout");
+                const cancelBtn = document.getElementById("cancelTimeout");
+                const zeroBtn = document.getElementById("zeroTimeoutBtn");
+
+                function log(msg) {
+                        logBox.textContent += msg + "\n";
+                        logBox.scrollTop = logBox.scrollHeight;
+                        console.log(msg);
+                }
+
+                // ------------------------------
+                // 1️⃣ Basic setTimeout + clearTimeout
+                // ------------------------------
+                let timeoutId = null;
+
+                startBtn.addEventListener("click", () => {
+                        if (timeoutId !== null) {
+                                log("Timeout already scheduled. Cancel first if you want new.");
+                                return;
+                        }
+
+                        statusText.textContent = "Status: Timeout scheduled (3 seconds)...";
+
+                        timeoutId = setTimeout(() => {
+                                log("✅ Timeout fired after 3000ms!");
+                                statusText.textContent = "Status: Timeout completed.";
+                                timeoutId = null;
+                        }, 3000);
+
+                        log("⏳ setTimeout scheduled (id = " + timeoutId + ")");
+                });
+
+                cancelBtn.addEventListener("click", () => {
+                        if (timeoutId !== null) {
+                                clearTimeout(timeoutId);
+                                log("❌ Timeout cancelled (id = " + timeoutId + ")");
+                                statusText.textContent = "Status: Timeout cancelled.";
+                                timeoutId = null;
+                        } else {
+                                log("ℹ️ No active timeout to cancel.");
+                        }
+                });
+
+                // ------------------------------
+                // 2️⃣ setTimeout(fn, 0) — Event Loop Demo
+                // ------------------------------
+                zeroBtn.addEventListener("click", () => {
+                        log("Start 0ms demo: A");
+
+                        setTimeout(() => {
+                                log("Inside setTimeout 0ms callback: C");
+                        }, 0);
+
+                        log("After scheduling timeout: B");
+
+                        /*
+                        Expected order:
+                        A (sync)
+                        B (sync)
+                        C (async, after current stack)
+                  
+                        Because: Even with 0ms, callback goes to "task queue", runs later.
+                        */
+                });
+
+                // =====================================================================
+                // 📌 Mini Interview Q/A (in code comments)
+                // =====================================================================
+                /*
+                Q1: Is setTimeout synchronous or asynchronous?
+                A: Asynchronous. It schedules a callback to run later.
+            
+                Q2: What does setTimeout return?
+                A: An ID (number), used with clearTimeout(id).
+            
+                Q3: Does setTimeout guarantee exact delay?
+                A: No, it guarantees at least that delay, then depends on event loop.
+            
+                Q4: What is setTimeout(fn, 0) used for?
+                A: To run code asynchronously *after* current call stack is clear.
+            
+                Q5: Difference between setTimeout and clearTimeout?
+                A: setTimeout schedules, clearTimeout cancels.
+                */
+        </script>
+</body>
+
+</html>

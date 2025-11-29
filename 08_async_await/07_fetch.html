@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>04 - Fetch API Full Guide</title>
+        <style>
+                body {
+                        font-family: Arial, sans-serif;
+                        background: #f4f6f9;
+                        padding: 30px;
+                }
+
+                h1 {
+                        margin-top: 0;
+                }
+
+                .box {
+                        background: #fff;
+                        padding: 16px;
+                        border-radius: 10px;
+                        margin-bottom: 18px;
+                        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+                }
+
+                button {
+                        padding: 8px 14px;
+                        border-radius: 6px;
+                        border: none;
+                        background: #4a90e2;
+                        color: #fff;
+                        cursor: pointer;
+                        margin: 4px 4px 4px 0;
+                        font-size: 14px;
+                }
+
+                button:hover {
+                        background: #357ad4;
+                }
+
+                #log {
+                        background: #111;
+                        color: #0f0;
+                        padding: 10px;
+                        border-radius: 6px;
+                        min-height: 100px;
+                        font-family: Consolas, monospace;
+                        white-space: pre-wrap;
+                        overflow-y: auto;
+                }
+
+                #data {
+                        background: #eee;
+                        padding: 10px;
+                        border-radius: 6px;
+                        min-height: 120px;
+                        font-family: Consolas, monospace;
+                        white-space: pre-wrap;
+                        overflow-y: auto;
+                }
+
+                code {
+                        background: #eee;
+                        padding: 2px 4px;
+                        border-radius: 4px;
+                        font-size: 13px;
+                }
+        </style>
+</head>
+
+<body>
+        <h1>04️⃣ Fetch API — Full Guide (GET / POST / PUT / DELETE / Abort)</h1>
+
+        <div class="box">
+                <h2>1️⃣ GET JSON with fetch + then/catch</h2>
+                <button id="btn-get-then">GET /posts/1 (then/catch)</button>
+        </div>
+
+        <div class="box">
+                <h2>2️⃣ GET JSON with async/await</h2>
+                <button id="btn-get-async">GET /posts/2 (async/await)</button>
+        </div>
+
+        <div class="box">
+                <h2>3️⃣ GET text() instead of json()</h2>
+                <button id="btn-get-text">GET text from /posts/1</button>
+        </div>
+
+        <div class="box">
+                <h2>4️⃣ POST JSON (create resource)</h2>
+                <button id="btn-post">POST new post</button>
+        </div>
+
+        <div class="box">
+                <h2>5️⃣ PUT vs PATCH (update resource)</h2>
+                <button id="btn-put">PUT /posts/1</button>
+                <button id="btn-patch">PATCH /posts/1</button>
+        </div>
+
+        <div class="box">
+                <h2>6️⃣ DELETE (delete resource)</h2>
+                <button id="btn-delete">DELETE /posts/1</button>
+        </div>
+
+        <div class="box">
+                <h2>7️⃣ Parallel fetch (Promise.all)</h2>
+                <button id="btn-parallel-fetch">GET /posts/1 & /posts/2 parallel</button>
+        </div>
+
+        <div class="box">
+                <h2>8️⃣ Abort fetch using AbortController (cancel request)</h2>
+                <button id="btn-start-long">Start fake long fetch</button>
+                <button id="btn-abort">Abort long fetch</button>
+        </div>
+
+        <div class="box">
+                <h2>📦 Response Data</h2>
+                <div id="data"></div>
+        </div>
+
+        <div class="box">
+                <h2>📜 Log</h2>
+                <div id="log"></div>
+        </div>
+
+        <script>
+                // =====================================================================
+                // 📘 Fetch API — Full Theory
+                // =====================================================================
+                /*
+                fetch(url, options?) → Promise<Response>
+            
+                Basic GET:
+                ----------
+                  fetch("https://api.example.com")
+                    .then(res => res.json())
+                    .then(data => {...})
+                    .catch(err => {...});
+            
+                Response object:
+                ----------------
+                  res.ok        → boolean (status in range 200–299)
+                  res.status    → number (e.g. 200, 404, 500)
+                  res.headers   → Headers object
+                  res.json()    → Promise that resolves with parsed JSON
+                  res.text()    → Promise that resolves with text string
+                  res.blob()    → Promise for binary data (images, files)
+                  res.formData(), res.arrayBuffer() also exist.
+            
+                Common methods:
+                ---------------
+                GET  : method: "GET"    (default)
+                POST : method: "POST"   (body allowed)
+                PUT  : method: "PUT"    (replace resource)
+                PATCH: method: "PATCH"  (partial update)
+                DELETE: method: "DELETE"
+            
+                Sending JSON:
+                -------------
+                  fetch(url, {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ key: "value" })
+                  })
+            
+                ERROR HANDLING:
+                ---------------
+                - fetch REJECTS only on network errors (no internet, DNS fail, etc.)
+                - For 404/500, fetch RESOLVES, but res.ok = false.
+                  So we must manually check:
+                    if (!res.ok) throw new Error("HTTP " + res.status);
+            
+                ABORT CONTROLLER:
+                -----------------
+                  const controller = new AbortController();
+                  const signal = controller.signal;
+            
+                  fetch(url, { signal });
+            
+                  controller.abort(); // rejects fetch with AbortError
+                */
+
+                const logBox = document.getElementById("log");
+                const dataBox = document.getElementById("data");
+                function log(msg, clear = false) {
+                        if (clear) logBox.textContent = "";
+                        logBox.textContent += msg + "\n";
+                        logBox.scrollTop = logBox.scrollHeight;
+                        console.log(msg);
+                }
+                function showData(objOrText, clear = true) {
+                        if (clear) dataBox.textContent = "";
+                        if (typeof objOrText === "string") {
+                                dataBox.textContent += objOrText + "\n";
+                        } else {
+                                dataBox.textContent += JSON.stringify(objOrText, null, 2) + "\n";
+                        }
+                        dataBox.scrollTop = dataBox.scrollHeight;
+                }
+
+                const BASE_URL = "https://jsonplaceholder.typicode.com/posts";
+
+                const btnGetThen = document.getElementById("btn-get-then");
+                const btnGetAsync = document.getElementById("btn-get-async");
+                const btnGetText = document.getElementById("btn-get-text");
+                const btnPost = document.getElementById("btn-post");
+                const btnPut = document.getElementById("btn-put");
+                const btnPatch = document.getElementById("btn-patch");
+                const btnDelete = document.getElementById("btn-delete");
+                const btnParallelFetch = document.getElementById("btn-parallel-fetch");
+                const btnStartLong = document.getElementById("btn-start-long");
+                const btnAbort = document.getElementById("btn-abort");
+
+                // =====================================================================
+                // 1️⃣ GET JSON with then/catch
+                // =====================================================================
+
+                btnGetThen.addEventListener("click", () => {
+                        log("▶ GET /posts/1 with then/catch", true);
+                        showData("", true);
+
+                        fetch(`${BASE_URL}/1`)
+                                .then((res) => {
+                                        log("HTTP status: " + res.status);
+                                        if (!res.ok) {
+                                                throw new Error("HTTP error " + res.status);
+                                        }
+                                        return res.json();
+                                })
+                                .then((data) => {
+                                        log("✅ Data received (then):");
+                                        showData(data);
+                                })
+                                .catch((err) => {
+                                        log("❌ Error (then/catch): " + err.message);
+                                });
+                });
+
+                // =====================================================================
+                // 2️⃣ GET JSON with async/await
+                // =====================================================================
+
+                btnGetAsync.addEventListener("click", async () => {
+                        log("▶ GET /posts/2 with async/await", true);
+                        showData("", true);
+
+                        try {
+                                const res = await fetch(`${BASE_URL}/2`);
+                                log("HTTP status: " + res.status);
+
+                                if (!res.ok) throw new Error("HTTP error " + res.status);
+
+                                const data = await res.json();
+                                log("✅ Data received (async/await):");
+                                showData(data);
+                        } catch (err) {
+                                log("❌ Error (async/await): " + err.message);
+                        }
+                });
+
+                // =====================================================================
+                // 3️⃣ GET text instead of JSON
+                // =====================================================================
+
+                btnGetText.addEventListener("click", async () => {
+                        log("▶ GET text() from /posts/1", true);
+                        showData("", true);
+
+                        try {
+                                const res = await fetch(`${BASE_URL}/1`);
+                                log("HTTP status: " + res.status);
+                                const text = await res.text(); // raw string
+                                log("✅ Raw text received (first 200 chars):");
+                                showData(text.slice(0, 200) + "...");
+                        } catch (err) {
+                                log("❌ Error GET text(): " + err.message);
+                        }
+                });
+
+                // =====================================================================
+                // 4️⃣ POST JSON (create resource)
+                // =====================================================================
+
+                btnPost.addEventListener("click", async () => {
+                        log("▶ POST JSON to /posts", true);
+                        showData("", true);
+
+                        const newPost = {
+                                title: "Hello from fetch()",
+                                body: "This is a test post created via POST",
+                                userId: 101,
+                        };
+
+                        try {
+                                const res = await fetch(BASE_URL, {
+                                        method: "POST",
+                                        headers: {
+                                                "Content-Type": "application/json; charset=UTF-8",
+                                        },
+                                        body: JSON.stringify(newPost),
+                                });
+
+                                log("HTTP status: " + res.status);
+                                const data = await res.json();
+                                log("✅ POST response data:");
+                                showData(data);
+                        } catch (err) {
+                                log("❌ POST error: " + err.message);
+                        }
+                });
+
+                // =====================================================================
+                // 5️⃣ PUT vs PATCH
+                // =====================================================================
+
+                btnPut.addEventListener("click", async () => {
+                        log("▶ PUT /posts/1 (replace resource)", true);
+                        showData("", true);
+
+                        const updatedPost = {
+                                id: 1,
+                                title: "Updated Title (PUT)",
+                                body: "This replaces the whole resource (example).",
+                                userId: 1,
+                        };
+
+                        try {
+                                const res = await fetch(`${BASE_URL}/1`, {
+                                        method: "PUT",
+                                        headers: { "Content-Type": "application/json" },
+                                        body: JSON.stringify(updatedPost),
+                                });
+                                log("HTTP status: " + res.status);
+                                const data = await res.json();
+                                log("✅ PUT response:");
+                                showData(data);
+                        } catch (err) {
+                                log("❌ PUT error: " + err.message);
+                        }
+                });
+
+                btnPatch.addEventListener("click", async () => {
+                        log("▶ PATCH /posts/1 (partial update)", true);
+                        showData("", true);
+
+                        const partialUpdate = {
+                                title: "Patched Title (PATCH)",
+                        };
+
+                        try {
+                                const res = await fetch(`${BASE_URL}/1`, {
+                                        method: "PATCH",
+                                        headers: { "Content-Type": "application/json" },
+                                        body: JSON.stringify(partialUpdate),
+                                });
+                                log("HTTP status: " + res.status);
+                                const data = await res.json();
+                                log("✅ PATCH response:");
+                                showData(data);
+                        } catch (err) {
+                                log("❌ PATCH error: " + err.message);
+                        }
+                });
+
+                // =====================================================================
+                // 6️⃣ DELETE
+                // =====================================================================
+
+                btnDelete.addEventListener("click", async () => {
+                        log("▶ DELETE /posts/1", true);
+                        showData("", true);
+
+                        try {
+                                const res = await fetch(`${BASE_URL}/1`, {
+                                        method: "DELETE",
+                                });
+                                log("HTTP status: " + res.status);
+                                // JSONPlaceholder returns an empty object for DELETE
+                                const data = await res.text();
+                                log("✅ DELETE response (text): " + data);
+                                showData("Deleted (demo API doesn't actually delete).");
+                        } catch (err) {
+                                log("❌ DELETE error: " + err.message);
+                        }
+                });
+
+                // =====================================================================
+                // 7️⃣ Parallel Fetch (Promise.all)
+                // =====================================================================
+
+                btnParallelFetch.addEventListener("click", async () => {
+                        log("▶ Parallel fetch /posts/1 & /posts/2", true);
+                        showData("", true);
+
+                        try {
+                                const [res1, res2] = await Promise.all([
+                                        fetch(`${BASE_URL}/1`),
+                                        fetch(`${BASE_URL}/2`),
+                                ]);
+                                log(`Statuses: [${res1.status}, ${res2.status}]`);
+
+                                if (!res1.ok || !res2.ok) {
+                                        throw new Error("One of the responses is not ok");
+                                }
+
+                                const [data1, data2] = await Promise.all([res1.json(), res2.json()]);
+                                log("✅ Parallel data received:");
+                                showData({ post1: data1, post2: data2 });
+                        } catch (err) {
+                                log("❌ Parallel fetch error: " + err.message);
+                        }
+                });
+
+                // =====================================================================
+                // 8️⃣ AbortController (cancel fetch)
+                // =====================================================================
+                let abortController = null;
+
+                btnStartLong.addEventListener("click", async () => {
+                        log("▶ Start 'long' fetch (we'll abort it)", true);
+                        showData("", true);
+
+                        abortController = new AbortController();
+                        const { signal } = abortController;
+
+                        try {
+                                // Note: JSONPlaceholder is fast, but we simulate that we might
+                                // want to cancel this request.
+                                const res = await fetch(`${BASE_URL}/1`, { signal });
+                                log("HTTP status: " + res.status);
+                                const data = await res.json();
+                                log("✅ Long fetch actually completed (not aborted):");
+                                showData(data);
+                        } catch (err) {
+                                if (err.name === "AbortError") {
+                                        log("⚠️ Fetch aborted (AbortError)");
+                                        showData("Request was cancelled by AbortController.");
+                                } else {
+                                        log("❌ Long fetch error: " + err.message);
+                                }
+                        }
+                });
+
+                btnAbort.addEventListener("click", () => {
+                        if (abortController) {
+                                abortController.abort();
+                                log("⛔ AbortController.abort() called.");
+                                abortController = null;
+                        } else {
+                                log("ℹ️ No active fetch to abort.");
+                        }
+                });
+
+                // =====================================================================
+                // 💡 Mini Interview Notes (Fetch Deep)
+                // =====================================================================
+                /*
+                Q1: When does fetch reject vs resolve?
+                A:
+                  - Reject: network error (DNS fail, CORS blocked, no internet).
+                  - Resolve: always, even for 404/500 → check res.ok / res.status.
+            
+                Q2: How to detect HTTP errors with fetch?
+                A:
+                  if (!res.ok) throw new Error("HTTP " + res.status);
+            
+                Q3: How to send JSON in POST request?
+                A:
+                  fetch(url, {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify(data)
+                  });
+            
+                Q4: Difference between PUT and PATCH?
+                A:
+                  - PUT: replace entire resource (conceptually).
+                  - PATCH: update partial fields.
+            
+                Q5: What is AbortController used for?
+                A:
+                  - To cancel an ongoing fetch.
+                  - fetch(url, { signal: controller.signal });
+                    controller.abort();
+            
+                Q6: Difference between res.json() and res.text()?
+                A:
+                  - json(): parse body as JSON object (returns Promise).
+                  - text(): get raw text string.
+            
+                Q7: How to do multiple requests in parallel?
+                A:
+                  const [res1, res2] = await Promise.all([fetch(a), fetch(b)]);
+            
+                Q8: Can we set custom headers?
+                A:
+                  headers: { "Authorization": "Bearer token", "X-Custom": "value" }
+                */
+        </script>
+</body>
+
+</html>

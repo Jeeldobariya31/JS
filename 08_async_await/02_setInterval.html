@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+        
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title.>Set Interval Demo</title.>
+        <style>
+                body {
+                        font-family: Arial, sans-serif;
+                        background: #f4f6f9;
+                        padding: 30px;
+                }
+
+                .box {
+                        background: #fff;
+                        padding: 16px;
+                        border-radius: 10px;
+                        margin-bottom: 16px;
+                        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+                }
+
+                button {
+                        padding: 8px 14px;
+                        border-radius: 6px;
+                        border: none;
+                        background: #4a90e2;
+                        color: #fff;
+                        cursor: pointer;
+                        margin: 4px;
+                }
+
+                button:hover {
+                        background: #357ad4;
+                }
+
+                #log {
+                        background: #111;
+                        color: #0f0;
+                        padding: 10px;
+                        border-radius: 6px;
+                        min-height: 80px;
+                        font-family: Consolas, monospace;
+                        white-space: pre-wrap;
+                        overflow-y: auto;
+                }
+        </style>
+</head>
+
+<body>
+        <h1>⏱ setInterval in JavaScript (Full Demo + Theory)</h1>
+
+        <div class="box">
+                <h2>1️⃣ Basic setInterval & clearInterval (Counter)</h2>
+                <button id="startInterval">Start Counter</button>
+                <button id="stopInterval">Stop Counter</button>
+                <p>Count: <span id="counter">0</span></p>
+        </div>
+
+        <div class="box">
+                <h2>2️⃣ Simple Digital Clock (HH:MM:SS)</h2>
+                <p id="clock" style="font-size: 20px; font-weight:bold;">--:--:--</p>
+        </div>
+
+        <div class="box">
+                <h2>📜 Log</h2>
+                <div id="log"></div>
+        </div>
+
+        <script>
+                // =====================================================================
+                // 📘 setInterval — Full Theory
+                // =====================================================================
+                /*
+                setInterval(fn, delay, ...args)
+                --------------------------------
+                - Repeats a function every delay milliseconds.
+                - Continues until clearInterval(id) is called or page closed.
+            
+                Syntax:
+                  const id = setInterval(callback, delay, arg1, ...);
+            
+                To stop:
+                  clearInterval(id);
+            
+                Important points:
+                -----------------
+                - If callback takes longer than delay, intervals may "drift".
+                - For precise timing, sometimes repeated setTimeout is better.
+                */
+
+                const logBox = document.getElementById("log");
+                const counterSpan = document.getElementById("counter");
+                const startIntervalBtn = document.getElementById("startInterval");
+                const stopIntervalBtn = document.getElementById("stopInterval");
+                const clockSpan = document.getElementById("clock");
+
+                function log(msg) {
+                        logBox.textContent += msg + "\n";
+                        logBox.scrollTop = logBox.scrollHeight;
+                        console.log(msg);
+                }
+
+                // ------------------------------
+                // 1️⃣ Counter with setInterval
+                // ------------------------------
+                let count = 0;
+                let intervalId = null;
+
+                startIntervalBtn.addEventListener("click", () => {
+                        if (intervalId !== null) {
+                                log("Interval already running.");
+                                return;
+                        }
+
+                        intervalId = setInterval(() => {
+                                count++;
+                                counterSpan.textContent = count;
+                                log("Counter tick: " + count);
+                        }, 1000);
+
+                        log("▶️ Interval started (every 1000ms). id=" + intervalId);
+                });
+
+                stopIntervalBtn.addEventListener("click", () => {
+                        if (intervalId !== null) {
+                                clearInterval(intervalId);
+                                log("⏹ Interval stopped. id=" + intervalId);
+                                intervalId = null;
+                        } else {
+                                log("ℹ️ No interval to stop.");
+                        }
+                });
+
+                // ------------------------------
+                // 2️⃣ Simple Digital Clock using setInterval
+                // ------------------------------
+                function updateClock() {
+                        const now = new Date();
+                        const hh = String(now.getHours()).padStart(2, "0");
+                        const mm = String(now.getMinutes()).padStart(2, "0");
+                        const ss = String(now.getSeconds()).padStart(2, "0");
+                        clockSpan.textContent = `${hh}:${mm}:${ss}`;
+                }
+
+                // Run once immediately, then every second
+                updateClock();
+                setInterval(updateClock, 1000);
+
+                // =====================================================================
+                // 📌 Mini Interview Q/A
+                // =====================================================================
+                /*
+                Q1: Difference between setTimeout and setInterval?
+                A:
+                  setTimeout  → runs once after delay.
+                  setInterval → runs repeatedly every delay until cleared.
+            
+                Q2: How to stop setInterval?
+                A:
+                  const id = setInterval(...);
+                  clearInterval(id);
+            
+                Q3: Can setInterval callback overlap?
+                A:
+                  If callback takes longer than delay, it will not run in parallel,
+                  but calls can "queue" and timing drifts.
+            
+                Q4: When to prefer repeated setTimeout over setInterval?
+                A:
+                  When you need precise control of the next run based on current
+                  operation time.
+                */
+        </script>
+</body>
+
+</html>
