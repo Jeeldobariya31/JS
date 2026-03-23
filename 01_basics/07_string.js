@@ -2,7 +2,7 @@
 // Demonstrating string operations in JavaScript
 
 // Creating strings using single and double quotes
-let singleQuoteString = "Hello, world!";
+let singleQuoteString = 'Hello, world!';
 let doubleQuoteString = "Hello, world!";
 console.log("Single Quote String:", singleQuoteString); // Output: Hello, world!
 console.log("Double Quote String:", doubleQuoteString); // Output: Hello, world!
@@ -27,9 +27,9 @@ let interpolatedString = `My name is ${name} and I am ${age} years old.`; // her
 console.log("Interpolated String:", interpolatedString); // Output: My name is Alice and I am 30 years old.
 
 // String methods
-let sampleString = "  JavaScript is awesome!  ";        
+let sampleString = "  JavaScript is awesome!  ";
 //1. length property
-console.log("Original String:", sampleString); // Output: "  JavaScript is awesome!  "  
+console.log("Original String:", sampleString); // Output: "  JavaScript is awesome!  "
 console.log("Length:", sampleString.length); // Output: 26
 //2.uppercase - changes all characters to uppercase
 console.log("Uppercase:", sampleString.toUpperCase()); // Output: "  JAVASCRIPT IS AWESOME!  "
@@ -38,9 +38,12 @@ console.log("Lowercase:", sampleString.toLowerCase()); // Output: "  javascript 
 //4. trim - removes whitespace from both ends of a string
 console.log("Trimmed:", sampleString.trim()); // Output: "JavaScript is awesome!"
 //5. substring - extracts characters from a string between two specified indices
-console.log("Substring (0, 10):", sampleString.substring(0, 10));       // Output: "  JavaScri"
+console.log("Substring (0, 10):", sampleString.substring(0, 10)); // Output: "  JavaScri"
 //6. replace - replaces a specified value with another value in a string
-console.log("Replace 'awesome' with 'great':", sampleString.replace("awesome", "great")); // Output: "  JavaScript is great!  "
+console.log(
+  "Replace 'awesome' with 'great':",
+  sampleString.replace("awesome", "great"),
+); // Output: "  JavaScript is great!  "
 //7.includes - checks if a string contains a specified value
 console.log("Includes 'Script':", sampleString.includes("Script")); // Output: true
 //8. startsWith and endsWith - checks if a string starts or ends with a specified value
@@ -61,7 +64,10 @@ console.log("Repeat 3 times:", sampleString.trim().repeat(3)); // Output: "JavaS
 //15. slice - extracts a section of a string and returns it as a new string
 console.log("Slice (2, 12):", sampleString.slice(2, 12)); // Output: "JavaScript"
 //using negative indices with slice
-console.log("slice with negative indices (-10, -1):", sampleString.slice(-10, -1)); // Output: "some!  "
+console.log(
+  "slice with negative indices (-10, -1):",
+  sampleString.slice(-10, -1),
+); // Output: "some!  "
 //16. padStart and padEnd - pads a string with another string until it reaches a specified length
 console.log("Pad Start to length 30:", sampleString.trim().padStart(30, "-")); // Output: "--------JavaScript is awesome!" //here - is used to pad the string to make its total length 30
 console.log("Pad End to length 30:", sampleString.trim().padEnd(30, "-")); // Output: "JavaScript is awesome!--------" //here - is used to pad the string to make its total length 30
