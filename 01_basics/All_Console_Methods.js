@@ -1,7 +1,15 @@
 //All_Console_Methods.js
 //1. console.log() - Used to print messages to the console.
 console.log("Hello, World!");
+// advanced usage of console.log() with multiple arguments and string formatting
+const name = "Alice";
+const age = 30;
+console.log("Name: %s, Age: %d", name, age);
 
+//work only in browser environment
+//consolw with CSS styling
+console.log("%cThis is a styled message!", "color: blue; font-size: 20px; font-weight: bold;");
+console.log("%cThis is another styled message!", "color: red; font-size: 18px; font-style: italic;");   
 //2. console.error() - Used to print error messages to the console.
 console.error("This is an error message!");
 //3. console.warn() - Used to print warning messages to the console.
