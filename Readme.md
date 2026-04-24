@@ -142,9 +142,9 @@ Welcome to my comprehensive JavaScript learning repository! This project contain
 Hi! I'm an enthusiastic developer learning and building with JavaScript. 
 
 - 💼 **LinkedIn:** [[jeel-doabriya](https://www.linkedin.com/in/jeel-dobariya/)]
-- 🐙 **GitHub:** [[Your GitHub Username](https://github.com/Jeeldobariya31)]
+- 🐙 **GitHub:** [Jeeldobariya31](https://github.com/Jeeldobariya31)
 - 🌐 **Portfolio/Website:** [[Portfolio]](https://jeel-dobariya.vercel.app)
-- 📧 **Email:** [[Email Address]](mailto:jeeldobariya33@gmail.com)
+- 📧 **Email:** [[jeeldobariya33@gmail.com]](mailto:jeeldobariya33@gmail.com)
 
 *Feel free to explore the code, use it for reference, or suggest improvements!*
 
