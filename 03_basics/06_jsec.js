@@ -181,7 +181,7 @@ obj.arrowFn();
 // 🔟 Summary (Perfect for final revision)
 // ===================================================================
 /*
-✔ EC = Memory Phase + Code Phase
+✔ EC(Execution Context) = Memory Phase + Code Phase
 ✔ Memory Phase = Hoisting
 ✔ function declaration hoisted fully
 ✔ var hoisted as undefined
