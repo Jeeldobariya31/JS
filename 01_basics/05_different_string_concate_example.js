@@ -8,10 +8,10 @@ let message1 = part1 + part2 + part3;
 console.log("Using + operator:", message1); // Output: JavaScript is fun!
 
 // Using template literals
-let name = "Alice";
-let hobby = "painting";
+let name = "Jeel";
+let hobby = "Coding";
 let message2 = `Hello, my name is ${name} and I love ${hobby}.`;
-console.log("Using template literals:", message2); // Output: Hello, my name is Alice and I love painting.
+console.log("Using template literals:", message2); // Output: Hello, my name is Jeel and I love Coding.
 
 // Using concat() method
 let greet1 = "Good ";
