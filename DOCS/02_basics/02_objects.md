@@ -1,299 +1,771 @@
-# Objects in JavaScript
+# 📘 JavaScript Objects – Complete Summary
 
-## Overview
-Comprehensive guide to JavaScript objects, properties, and methods.
+Objects are one of the **most important data structures** in JavaScript.
 
-## Creating Objects
+They store data in **key–value pairs**.
 
-### Object Literal
 ```javascript
-let obj = {};                           // Empty object
-let person = { name: "John", age: 30 }; // Object with properties
-let user = {
-    name: "John",
-    age: 30,
-    email: "john@example.com"
+let person = {
+    name: "Jeel",
+    age: 21
 };
 ```
 
-### Object Constructor
+> Objects are used to represent **real-world entities** like users, products, cars, etc. :contentReference[oaicite:0]{index=0}
+
+---
+
+# 🎯 What is an Object?
+
+```text
+Object = Collection of Key–Value Pairs
+```
+
+```javascript
+let person = {
+    name: "Jeel",
+    age: 21
+};
+```
+
+### Output
+
+```text
+{
+    name: "Jeel",
+    age: 21
+}
+```
+
+---
+
+# 🏗️ Ways to Create Objects
+
+---
+
+# 1. Object Literal ⭐ (Most Common)
+
+```javascript
+let obj = {
+    a: 10,
+    b: 20
+};
+```
+
+---
+
+# 2. Using `new Object()`
+
 ```javascript
 let obj = new Object();
-obj.name = "John";
-obj.age = 30;
+
+obj.title = "JavaScript";
 ```
 
-### Constructor Function
+---
+
+# 3. Constructor Function
+
 ```javascript
-function Person(name, age) {
-    this.name = name;
-    this.age = age;
+function Car(model, year) {
+    this.model = model;
+    this.year = year;
 }
-let john = new Person("John", 30);
+
+let car = new Car("BMW", 2020);
 ```
 
-## Accessing Properties
+---
 
-### Dot Notation
+# 4. Class (ES6)
+
 ```javascript
-let user = { name: "John", age: 30 };
-user.name;                  // "John"
-user.age;                   // 30
+class Student {
+    constructor(name, roll) {
+        this.name = name;
+        this.roll = roll;
+    }
+}
+
+let s = new Student("Jeel", 1);
 ```
 
-### Bracket Notation
+---
+
+# 5. `Object.create()`
+
+Creates object with prototype.
+
 ```javascript
-let user = { name: "John", age: 30 };
-user["name"];               // "John"
-user["age"];                // 30
-let prop = "name";
-user[prop];                 // "John" (dynamic property access)
+let base = {
+    role: "Human"
+};
+
+let user = Object.create(base);
+
+user.name = "Jeel";
 ```
 
-## Modifying Properties
+---
 
-### Adding Properties
-```javascript
-let user = {};
-user.name = "John";         // Add new property
-user["age"] = 30;           // Add with bracket notation
-```
-
-### Updating Properties
-```javascript
-let user = { name: "John" };
-user.name = "Jane";         // Update existing property
-```
-
-### Deleting Properties
-```javascript
-let user = { name: "John", age: 30 };
-delete user.age;            // Remove age property
-```
-
-## Object Methods
-
-### Object.keys()
-Returns array of object's own properties
+# 6. Factory Function
 
 ```javascript
-let user = { name: "John", age: 30, email: "john@test.com" };
-Object.keys(user);          // ["name", "age", "email"]
-```
-
-### Object.values()
-Returns array of object's own values
-
-```javascript
-let user = { name: "John", age: 30, email: "john@test.com" };
-Object.values(user);        // ["John", 30, "john@test.com"]
-```
-
-### Object.entries()
-Returns array of [key, value] pairs
-
-```javascript
-let user = { name: "John", age: 30 };
-Object.entries(user);       // [["name", "John"], ["age", 30]]
-```
-
-### Object.assign()
-Copies properties to target object
-
-```javascript
-let obj1 = { a: 1, b: 2 };
-let obj2 = { b: 3, c: 4 };
-Object.assign(obj1, obj2);  // { a: 1, b: 3, c: 4 }
-
-let copy = Object.assign({}, obj1);  // Copy object
-```
-
-### Object.create()
-Creates new object with specified prototype
-
-```javascript
-let proto = { greet: function() { return "Hi"; } };
-let obj = Object.create(proto);
-obj.greet();                // "Hi"
-```
-
-### Object.defineProperty()
-Defines new or modifies existing property
-
-```javascript
-let obj = {};
-Object.defineProperty(obj, 'name', {
-    value: 'John',
-    writable: true,
-    enumerable: true,
-    configurable: true
-});
-```
-
-### Object.defineProperties()
-Defines multiple properties
-
-```javascript
-let obj = {};
-Object.defineProperties(obj, {
-    name: { value: 'John', writable: true },
-    age: { value: 30, writable: true }
-});
-```
-
-### Object.freeze()
-Prevents modifications
-
-```javascript
-let obj = { name: "John" };
-Object.freeze(obj);
-obj.name = "Jane";          // No effect in strict mode
-obj.age = 30;               // No effect
-```
-
-### Object.seal()
-Prevents adding/removing properties, allows modification
-
-```javascript
-let obj = { name: "John" };
-Object.seal(obj);
-obj.name = "Jane";          // Allowed
-obj.age = 30;               // Not allowed
-```
-
-### Object.is()
-Strict equality comparison
-
-```javascript
-Object.is(NaN, NaN);        // true
-Object.is(0, -0);           // false
-Object.is(5, 5);            // true
-```
-
-## Checking Properties
-
-### in Operator
-```javascript
-let user = { name: "John", age: 30 };
-"name" in user;             // true
-"email" in user;            // false
-```
-
-### hasOwnProperty()
-Checks for own property (not inherited)
-
-```javascript
-let user = { name: "John" };
-user.hasOwnProperty("name");     // true
-user.hasOwnProperty("toString"); // false (inherited)
-```
-
-### propertyIsEnumerable()
-Checks if property is enumerable
-
-```javascript
-let obj = { name: "John" };
-obj.propertyIsEnumerable("name"); // true
-```
-
-## Iterating Over Objects
-
-### for...in Loop
-```javascript
-let user = { name: "John", age: 30 };
-for (let key in user) {
-    console.log(key + ": " + user[key]);
+function createUser(name, email) {
+    return {
+        name,
+        email
+    };
 }
 ```
 
-### Object.keys() with forEach()
+---
+
+# 🔍 Accessing Properties
+
+---
+
+## Dot Notation
+
 ```javascript
-let user = { name: "John", age: 30 };
-Object.keys(user).forEach(key => {
-    console.log(key + ": " + user[key]);
-});
+person.name
 ```
 
-### Object.entries() with forEach()
+---
+
+## Bracket Notation
+
 ```javascript
-let user = { name: "John", age: 30 };
-Object.entries(user).forEach(([key, value]) => {
-    console.log(key + ": " + value);
-});
+person["name"]
 ```
 
-## Getters and Setters
+---
+
+# ✏️ Add Properties
 
 ```javascript
-let user = {
-    _name: "John",
-    get name() {
-        return this._name;
-    },
-    set name(value) {
-        this._name = value;
+person.city = "Rajkot";
+```
+
+---
+
+# 🔄 Update Properties
+
+```javascript
+person.age = 22;
+```
+
+---
+
+# ❌ Delete Properties
+
+```javascript
+delete person.city;
+```
+
+---
+
+# 🔎 Checking Properties
+
+---
+
+## `in` Operator
+
+```javascript
+"name" in person;
+```
+
+### Output
+
+```text
+true
+```
+
+---
+
+## `hasOwnProperty()`
+
+```javascript
+person.hasOwnProperty("name");
+```
+
+---
+
+# 📋 Object Methods
+
+---
+
+## `Object.keys()`
+
+Returns keys.
+
+```javascript
+Object.keys(person);
+```
+
+### Output
+
+```text
+["name", "age"]
+```
+
+---
+
+## `Object.values()`
+
+Returns values.
+
+```javascript
+Object.values(person);
+```
+
+---
+
+## `Object.entries()`
+
+Returns key-value pairs.
+
+```javascript
+Object.entries(person);
+```
+
+---
+
+# 🔄 Loop Through Objects
+
+---
+
+## `for...in`
+
+```javascript
+for(let key in person){
+    console.log(
+        key,
+        person[key]
+    );
+}
+```
+
+---
+
+# 📦 Spread Operator
+
+Clone or merge objects.
+
+```javascript
+let copy = {
+    ...person
+};
+```
+
+---
+
+## Merge
+
+```javascript
+let merged = {
+    ...obj1,
+    ...obj2
+};
+```
+
+---
+
+# 🎯 Destructuring
+
+Extract values.
+
+```javascript
+let {
+    name,
+    age
+} = person;
+```
+
+---
+
+# 🏢 Nested Objects
+
+```javascript
+let company = {
+    address: {
+        city: "Ahmedabad"
     }
 };
 
-console.log(user.name);     // "John"
-user.name = "Jane";         // Calls setter
-console.log(user.name);     // "Jane"
+console.log(
+    company.address.city
+);
 ```
 
-## Methods
+---
 
-### Defining Methods
+# 🛡️ Optional Chaining (`?.`)
+
+Prevents errors.
+
 ```javascript
-let user = {
-    name: "John",
-    greet() {
-        return `Hello, I'm ${this.name}`;
+company.contact?.phone;
+```
+
+### Output
+
+```text
+undefined
+```
+
+instead of:
+
+```text
+TypeError
+```
+
+---
+
+# 🔄 JSON Methods
+
+---
+
+## Object → JSON
+
+```javascript
+JSON.stringify(person);
+```
+
+---
+
+## JSON → Object
+
+```javascript
+JSON.parse(jsonString);
+```
+
+---
+
+# 🔒 `Object.freeze()`
+
+Prevents all changes.
+
+```javascript
+Object.freeze(person);
+```
+
+Cannot:
+
+```text
+❌ Add
+❌ Update
+❌ Delete
+```
+
+---
+
+# 🔐 `Object.seal()`
+
+Allows update only.
+
+```javascript
+Object.seal(person);
+```
+
+Can:
+
+```text
+✅ Update
+```
+
+Cannot:
+
+```text
+❌ Add
+❌ Delete
+```
+
+---
+
+# 🔗 `Object.assign()`
+
+Merge objects.
+
+```javascript
+Object.assign(
+    {},
+    obj1,
+    obj2
+);
+```
+
+---
+
+# 🔄 `Object.fromEntries()`
+
+Array → Object
+
+```javascript
+Object.fromEntries([
+    ["name","Jeel"],
+    ["age",21]
+]);
+```
+
+---
+
+# 📌 `Object.getOwnPropertyNames()`
+
+Returns all property names.
+
+```javascript
+Object.getOwnPropertyNames(
+    person
+);
+```
+
+---
+
+# ⚙️ Property Descriptors
+
+Control properties.
+
+```javascript
+Object.defineProperty(
+    obj,
+    "name",
+    {
+        value: "Jeel",
+        writable: false,
+        enumerable: true,
+        configurable: false
+    }
+);
+```
+
+---
+
+# 📋 Descriptor Properties
+
+| Property | Meaning |
+|-----------|----------|
+| writable | Can modify |
+| enumerable | Appears in loops |
+| configurable | Can delete |
+
+---
+
+# 🎯 Getters and Setters
+
+---
+
+## Getter
+
+```javascript
+get name() {
+    return this._name;
+}
+```
+
+---
+
+## Setter
+
+```javascript
+set name(value) {
+    this._name =
+        value.toUpperCase();
+}
+```
+
+---
+
+## Example
+
+```javascript
+user.name = "jeel";
+
+console.log(user.name);
+```
+
+### Output
+
+```text
+JEEL
+```
+
+---
+
+# 🔑 Symbol Keys
+
+Unique properties.
+
+```javascript
+const id = Symbol("id");
+
+let obj = {
+    [id]: 101
+};
+```
+
+---
+
+## Access
+
+```javascript
+obj[id];
+```
+
+---
+
+# 🧬 Prototypes
+
+Objects inherit properties.
+
+```javascript
+let proto = {
+    greet(){
+        return "Hello";
     }
 };
 
-user.greet();               // "Hello, I'm John"
+let child =
+    Object.create(proto);
 ```
 
-### this Keyword
+---
+
+## Usage
+
 ```javascript
-let user = {
-    name: "John",
-    greet() {
-        return this.name;   // 'this' refers to user
+child.greet();
+```
+
+---
+
+# 🏛️ Class Inheritance
+
+```javascript
+class Parent {
+    hi(){
+        return "Hi";
     }
+}
+
+class Child
+extends Parent {
+
+    hello(){
+        return "Hello";
+    }
+}
+```
+
+---
+
+# 🔄 Singleton Pattern
+
+Ensures only one instance.
+
+```javascript
+const Singleton =
+(function(){
+
+    let instance;
+
+    return {
+        getInstance(){
+
+            if(!instance){
+                instance = {};
+            }
+
+            return instance;
+        }
+    };
+
+})();
+```
+
+---
+
+# 🪞 Shallow Clone
+
+Copies top level only.
+
+```javascript
+let clone = {
+    ...original
 };
 ```
 
-## Spread Operator
+---
 
-### Copying Objects
-```javascript
-let obj1 = { a: 1, b: 2 };
-let obj2 = { ...obj1 };     // Shallow copy
-```
+# 🌊 Deep Clone
 
-### Merging Objects
-```javascript
-let obj1 = { a: 1, b: 2 };
-let obj2 = { c: 3, d: 4 };
-let merged = { ...obj1, ...obj2 };  // { a: 1, b: 2, c: 3, d: 4 }
-```
-
-## Destructuring
+Copies everything.
 
 ```javascript
-let user = { name: "John", age: 30, email: "john@test.com" };
-let { name, age } = user;
-name;                       // "John"
-age;                        // 30
+JSON.parse(
+    JSON.stringify(
+        original
+    )
+);
 ```
 
-## Best Practices
-- Use object literals for creating objects
-- Use dot notation when property name is known
-- Use bracket notation when property name is dynamic
-- Use `Object.keys()` to iterate over properties
-- Use `const` for objects unless reassignment is needed
-- Use getters/setters for property validation
-- Remember objects are passed by reference
-- Use `Object.freeze()` to prevent modifications of critical objects
+---
+
+# 🗺️ Map vs Object
+
+| Feature | Object | Map |
+|----------|---------|------|
+| Key Types | String/Symbol | Any Type |
+| Order | Not guaranteed | Preserved |
+| Size | Manual | `.size` |
+| Iteration | Harder | Easier |
+
+---
+
+# Example
+
+```javascript
+let map = new Map();
+
+map.set("name", "Jeel");
+
+map.get("name");
+```
+
+---
+
+# 📊 Freeze vs Seal
+
+| Feature | Freeze | Seal |
+|----------|---------|-------|
+| Update | ❌ | ✅ |
+| Add | ❌ | ❌ |
+| Delete | ❌ | ❌ |
+
+---
+
+# 🎯 Interview Questions
+
+---
+
+## How many ways to create objects?
+
+```text
+6 Common Ways
+```
+
+```text
+Object Literal
+new Object()
+Constructor Function
+Class
+Object.create()
+Factory Function
+```
+
+---
+
+## Difference between Dot and Bracket Notation?
+
+```javascript
+obj.name
+```
+
+```javascript
+obj["name"]
+```
+
+Bracket notation supports:
+
+```javascript
+obj[key]
+```
+
+---
+
+## Difference between Freeze and Seal?
+
+```text
+Freeze → No Changes
+
+Seal → Only Updates Allowed
+```
+
+---
+
+## What is Optional Chaining?
+
+Safe property access.
+
+```javascript
+user.address?.city
+```
+
+---
+
+## Difference between Shallow and Deep Clone?
+
+```text
+Shallow
+↓
+Copies top level only
+
+Deep
+↓
+Copies nested objects too
+```
+
+---
+
+# 🚀 Quick Revision
+
+```text
+Object Literal      → {}
+
+Access              → . []
+
+Check               → in
+                      hasOwnProperty()
+
+Loop                → for...in
+
+Clone               → ...
+
+JSON                → stringify()
+                      parse()
+
+Protection          → freeze()
+                      seal()
+
+Inheritance         → Object.create()
+                      extends
+
+Clone               → Shallow / Deep
+
+Advanced            → Getter
+                      Setter
+                      Symbol
+                      Descriptor
+```
+
+---
+
+## 💡 Memory Trick
+
+```text
+CAAD
+
+Create
+Access
+Add
+Delete
+```
+
+```text
+FSJ
+
+Freeze
+Seal
+JSON
+```
+

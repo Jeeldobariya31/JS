@@ -1,216 +1,526 @@
-# Console Methods in JavaScript
+# 📘 JavaScript Console Methods
 
-## Overview
-Comprehensive guide to console methods for debugging and logging in JavaScript.
+The `console` object provides access to the browser's debugging console and offers several useful methods for logging information, debugging applications, measuring performance, and inspecting data structures.
 
-## Basic Output
+---
 
-### console.log()
-Outputs a message or variables to the console
+# 📋 List of Console Methods
+
+| Method | Purpose |
+|---------|----------|
+| `console.log()` | General output |
+| `console.error()` | Display errors |
+| `console.warn()` | Display warnings |
+| `console.info()` | Display informational messages |
+| `console.debug()` | Debug messages |
+| `console.table()` | Display tabular data |
+| `console.time()` | Start timer |
+| `console.timeEnd()` | End timer |
+| `console.timeLog()` | Log timer progress |
+| `console.group()` | Create message groups |
+| `console.groupEnd()` | End a group |
+| `console.groupCollapsed()` | Create collapsed groups |
+| `console.count()` | Count occurrences |
+| `console.countReset()` | Reset counter |
+| `console.assert()` | Log if condition is false |
+| `console.trace()` | Display call stack |
+| `console.dir()` | Display object properties |
+| `console.dirxml()` | Display HTML/XML elements |
+| `console.clear()` | Clear console |
+| `console.timeStamp()` | Add performance timestamp |
+| `console.profile()` | Start CPU profiling |
+| `console.profileEnd()` | End CPU profiling |
+| `console.memory` | View memory usage |
+
+---
+
+# 1️⃣ `console.log()`
+
+Used for general output.
 
 ```javascript
-console.log('Hello World');
-console.log(123, 'text', true);
-let name = 'John';
-console.log(`Name: ${name}`);
+console.log("Hello, World!");
 ```
 
-### console.info()
-Similar to `log()`, typically with an info icon
+### Output
 
-```javascript
-console.info('Information message');
+```text
+Hello, World!
 ```
 
-### console.warn()
-Outputs warning message (usually in yellow)
+---
+
+## Multiple Arguments
 
 ```javascript
-console.warn('This is a warning');
+const name = "Alice";
+const age = 30;
+
+console.log("Name:", name, "Age:", age);
 ```
 
-### console.error()
-Outputs error message (usually in red)
+### Output
 
-```javascript
-console.error('This is an error');
+```text
+Name: Alice Age: 30
 ```
 
-### console.debug()
-Outputs debug message
+---
+
+## String Formatting
 
 ```javascript
-console.debug('Debug information');
+console.log("Name: %s, Age: %d", name, age);
 ```
 
-## Formatting Output
+### Output
 
-### String Substitution
-```javascript
-console.log('%s is %d years old', 'John', 30);
-console.log('%cStyled text', 'color: red; font-size: 16px;');
-console.log('%o', { name: 'John' });  // Object
-console.log('%O', { name: 'John' });  // Object (alternate)
+```text
+Name: Alice, Age: 30
 ```
 
-## Grouping
+### Format Specifiers
 
-### console.group() / console.groupEnd()
-Groups related messages
+| Specifier | Meaning |
+|-----------|----------|
+| `%s` | String |
+| `%d` | Integer |
+| `%f` | Floating point |
+| `%o` | Object |
+| `%c` | CSS Styling |
+
+---
+
+# 🎨 Browser CSS Styling
+
+⚠️ Works only in browser consoles.
 
 ```javascript
-console.group('User Details');
-console.log('Name: John');
-console.log('Age: 30');
-console.groupEnd();
+console.log(
+    "%cStyled Message",
+    "color: blue; font-size:20px;"
+);
 ```
 
-### console.groupCollapsed()
-Creates a collapsed group
+---
+
+# 2️⃣ `console.error()`
+
+Displays error messages.
 
 ```javascript
-console.groupCollapsed('Details');
-console.log('Hidden initially');
-console.groupEnd();
+console.error("This is an error!");
 ```
 
-## Counting and Timing
+### Output
 
-### console.count()
-Counts how many times it's called with a label
-
-```javascript
-console.count('click');
-console.count('click');
-console.count('click');  // "click: 3"
+```text
+❌ This is an error!
 ```
 
-### console.countReset()
-Resets the count for a label
+---
+
+# 3️⃣ `console.warn()`
+
+Displays warnings.
 
 ```javascript
-console.countReset('click');
+console.warn("Warning!");
 ```
 
-### console.time() / console.timeEnd()
-Measures execution time
+### Output
 
-```javascript
-console.time('loop');
-for (let i = 0; i < 1000000; i++) {
-    // some code
-}
-console.timeEnd('loop');  // Output: "loop: 0.123ms"
+```text
+⚠️ Warning!
 ```
 
-### console.timeLog()
-Logs elapsed time without stopping
+---
+
+# 4️⃣ `console.info()`
+
+Displays informational messages.
 
 ```javascript
-console.time('process');
-// ... some code
-console.timeLog('process');  // Logs time without ending
-// ... more code
-console.timeEnd('process');
+console.info("Information");
 ```
 
-## Assertions
+---
 
-### console.assert()
-Logs message if assertion is false
+# 5️⃣ `console.debug()`
+
+Used for debugging output.
 
 ```javascript
-console.assert(2 > 1, 'This is true');
-console.assert(1 > 2, 'This should print');  // Shows message
+console.debug("Debugging...");
 ```
 
-## Table Output
+---
 
-### console.table()
-Displays data as a table
+# 6️⃣ `console.table()`
+
+Displays arrays and objects as tables.
 
 ```javascript
-let users = [
-    { name: 'John', age: 30 },
-    { name: 'Jane', age: 25 },
-    { name: 'Bob', age: 35 }
+const data = [
+    { name: "Alice", age: 30 },
+    { name: "Bob", age: 25 }
 ];
-console.table(users);
+
+console.table(data);
 ```
 
-## Tracing
+### Output
 
-### console.trace()
-Outputs stack trace showing where the call happened
+```text
+┌─────────┬─────────┬─────┐
+│ (index) │ name    │ age │
+├─────────┼─────────┼─────┤
+│    0    │ Alice   │ 30  │
+│    1    │ Bob     │ 25  │
+└─────────┴─────────┴─────┘
+```
+
+---
+
+# 7️⃣ `console.time()` & `console.timeEnd()`
+
+Measure execution time.
 
 ```javascript
-function level3() {
-    console.trace('Trace point');
-}
+console.time("Timer");
 
-function level2() {
-    level3();
-}
+for(let i = 0; i < 1000000; i++) {}
 
-function level1() {
-    level2();
-}
-
-level1();
+console.timeEnd("Timer");
 ```
 
-## Clearing
+### Output
 
-### console.clear()
-Clears the console
+```text
+Timer: 5ms
+```
+
+---
+
+# 8️⃣ `console.group()`
+
+Creates expandable groups.
+
+```javascript
+console.group("Users");
+
+console.log("Alice");
+console.log("Bob");
+
+console.groupEnd();
+```
+
+---
+
+### Output
+
+```text
+▼ Users
+    Alice
+    Bob
+```
+
+---
+
+# 9️⃣ `console.count()`
+
+Counts occurrences.
+
+```javascript
+console.count("Counter");
+console.count("Counter");
+console.count("Counter");
+```
+
+### Output
+
+```text
+Counter: 1
+Counter: 2
+Counter: 3
+```
+
+---
+
+# 🔟 `console.clear()`
+
+Clears the console.
 
 ```javascript
 console.clear();
 ```
 
-## Styling
+⚠️ Use carefully.
 
-### CSS Styling with %c
+---
+
+# 1️⃣1️⃣ `console.assert()`
+
+Logs message if condition is false.
+
 ```javascript
-console.log('%cHello World', 'color: red; font-size: 20px; font-weight: bold;');
-console.log('%cWarning', 'color: orange; background: yellow;');
-console.log('%cSuccess', 'color: green; font-weight: bold;');
+console.assert(
+    1 === 2,
+    "Assertion Failed"
+);
 ```
 
-## Advanced Examples
+### Output
 
-### Nested Grouping
+```text
+Assertion failed: Assertion Failed
+```
+
+---
+
+# 1️⃣2️⃣ `console.trace()`
+
+Shows function call stack.
+
 ```javascript
-console.group('Outer');
-console.log('Item 1');
-console.group('Inner');
-console.log('Item 1.1');
-console.log('Item 1.2');
+function a() {
+    b();
+}
+
+function b() {
+    c();
+}
+
+function c() {
+    console.trace();
+}
+
+a();
+```
+
+### Output
+
+```text
+Trace
+    at c
+    at b
+    at a
+```
+
+---
+
+# 1️⃣3️⃣ `console.dir()`
+
+Displays object properties.
+
+```javascript
+const obj = {
+    name: "Alice",
+    age: 30
+};
+
+console.dir(obj);
+```
+
+---
+
+# 1️⃣4️⃣ `console.dirxml()`
+
+Displays HTML/XML elements.
+
+⚠️ Browser only.
+
+```javascript
+console.dirxml(document.body);
+```
+
+---
+
+# 1️⃣5️⃣ `console.groupCollapsed()`
+
+Creates collapsed groups.
+
+```javascript
+console.groupCollapsed("Details");
+
+console.log("Message 1");
+console.log("Message 2");
+
 console.groupEnd();
-console.log('Item 2');
-console.groupEnd();
 ```
 
-### Performance Monitoring
+---
+
+# 1️⃣6️⃣ `console.timeStamp()`
+
+Adds a timestamp to Performance tools.
+
 ```javascript
-console.time('fetch');
-fetch('https://api.example.com/data')
-    .then(response => response.json())
-    .then(data => {
-        console.timeEnd('fetch');
-        console.table(data);
-    });
+console.timeStamp("Data Loaded");
 ```
 
-## Browser vs Node.js
-- Most methods work in both browsers and Node.js
-- Some styling features (like %c) may not work in Node.js
-- Node.js has additional console methods
+⚠️ Browser DevTools only.
 
-## Best Practices
-- Use `console.log()` for general debugging
-- Use `console.warn()` and `console.error()` for important messages
-- Use `console.time()` for performance analysis
-- Use `console.table()` for viewing structured data
-- Remove or comment out console statements before production
-- Use meaningful labels with `console.group()` for organization
+---
+
+# 1️⃣7️⃣ `console.profile()`
+
+Starts CPU profiling.
+
+```javascript
+console.profile("Profile");
+
+for(let i = 0; i < 1000000; i++) {}
+
+console.profileEnd("Profile");
+```
+
+⚠️ Browser DevTools only.
+
+---
+
+# 1️⃣8️⃣ `console.memory`
+
+Displays memory information.
+
+```javascript
+console.log(console.memory);
+```
+
+### Example Output
+
+```javascript
+{
+    usedJSHeapSize: ...,
+    totalJSHeapSize: ...,
+    jsHeapSizeLimit: ...
+}
+```
+
+⚠️ Chrome-specific.
+
+---
+
+# 1️⃣9️⃣ `console.countReset()`
+
+Resets counter.
+
+```javascript
+console.count("Counter");
+console.count("Counter");
+
+console.countReset("Counter");
+
+console.count("Counter");
+```
+
+### Output
+
+```text
+Counter: 1
+Counter: 2
+
+Counter: 1
+```
+
+---
+
+# 2️⃣0️⃣ `console.timeLog()`
+
+Logs timer progress.
+
+```javascript
+console.time("Timer");
+
+setTimeout(() => {
+    console.timeLog("Timer");
+
+    console.timeEnd("Timer");
+}, 1000);
+```
+
+### Example Output
+
+```text
+Timer: 1001ms
+Timer: 1002ms
+```
+
+---
+
+# 🎯 Browser vs Node.js Support
+
+| Method | Browser | Node.js |
+|----------|----------|----------|
+| log | ✅ | ✅ |
+| error | ✅ | ✅ |
+| warn | ✅ | ✅ |
+| info | ✅ | ✅ |
+| debug | ✅ | ✅ |
+| table | ✅ | ✅ |
+| time | ✅ | ✅ |
+| group | ✅ | ✅ |
+| count | ✅ | ✅ |
+| assert | ✅ | ✅ |
+| trace | ✅ | ✅ |
+| dir | ✅ | ✅ |
+| clear | ✅ | ✅ |
+| dirxml | ✅ | ❌ |
+| profile | ✅ | ❌ |
+| memory | ⚠️ Partial | ❌ |
+| timeStamp | ⚠️ Partial | ❌ |
+
+---
+
+# 📚 Most Important for Exams
+
+```text
+console.log()
+console.error()
+console.warn()
+console.table()
+console.time()
+console.timeEnd()
+console.count()
+console.assert()
+console.trace()
+console.dir()
+```
+
+---
+
+# 🚀 Quick Revision
+
+```text
+log()          → Print output
+error()        → Errors
+warn()         → Warnings
+table()        → Tables
+time()         → Start timer
+timeEnd()      → End timer
+count()        → Count calls
+assert()       → Check conditions
+trace()        → Stack trace
+dir()          → Object details
+clear()        → Clear console
+```
+
+---
+
+## 💡 Memory Trick
+
+```text
+LEWITC ATD
+
+Log
+Error
+Warn
+Info
+Table
+Count
+
+Assert
+Trace
+Dir
+```
+

@@ -1,161 +1,538 @@
-# Data Types Summary
+# 📘 JavaScript Data Types Summary
 
-## Overview
-Quick reference for all JavaScript data types with key characteristics.
+JavaScript data types are divided into **two categories**:
+
+```text
+1. Primitive Data Types
+2. Non-Primitive (Reference) Data Types
+```
+
+---
+
+# 📊 JavaScript Data Types
+
+```text
+JavaScript Data Types
+│
+├── Primitive Types
+│   ├── Number
+│   ├── String
+│   ├── Boolean
+│   ├── Undefined
+│   ├── Null
+│   ├── Symbol
+│   └── BigInt
+│
+└── Non-Primitive (Reference) Types
+    ├── Object
+    ├── Array
+    └── Function
+```
+
+---
+
+# 1️⃣ Primitive Data Types
+
+Primitive data types store **single values** and are generally **immutable**.
+
+> 📌 Variables store the **actual value**.
+
+---
+
+## 1. Number
+
+Used to represent integers and floating-point numbers.
+
+```javascript
+let num = 42;
+
+console.log(num);
+console.log(typeof num);
+```
+
+### Output
+
+```text
+42
+number
+```
+
+---
+
+## 2. String
+
+Used to represent textual data.
+
+```javascript
+let str = "Hello, World!";
+
+console.log(str);
+console.log(typeof str);
+```
+
+### Output
+
+```text
+Hello, World!
+string
+```
+
+---
+
+## 3. Boolean
+
+Represents logical values.
+
+```javascript
+let bool = true;
+
+console.log(bool);
+console.log(typeof bool);
+```
+
+### Output
+
+```text
+true
+boolean
+```
+
+---
+
+## 4. Undefined
+
+A variable declared but not assigned a value.
+
+```javascript
+let undef;
+
+console.log(undef);
+console.log(typeof undef);
+```
+
+### Output
+
+```text
+undefined
+undefined
+```
+
+---
+
+## 5. Null
+
+Represents the intentional absence of a value.
+
+```javascript
+let nul = null;
+
+console.log(nul);
+console.log(typeof nul);
+```
+
+### Output
+
+```text
+null
+object
+```
+
+> ⚠️ **Important:** `typeof null` returns `"object"` due to a historical bug in JavaScript.
+
+---
+
+## 6. Symbol
+
+Creates unique identifiers.
+
+```javascript
+let sym = Symbol("id");
+
+console.log(sym);
+console.log(typeof sym);
+```
+
+### Output
+
+```text
+Symbol(id)
+symbol
+```
+
+---
+
+## 7. BigInt
+
+Used to store integers larger than `Number.MAX_SAFE_INTEGER`.
+
+```javascript
+let bigInt = BigInt(9007199254740991);
+
+console.log(bigInt);
+console.log(typeof bigInt);
+```
+
+### Output
+
+```text
+9007199254740991n
+bigint
+```
+
+---
+
+# 🧠 Primitive Data Types Summary
+
+| Data Type | Example | `typeof` |
+|------------|----------|-----------|
+| Number | `42` | `"number"` |
+| String | `"Hello"` | `"string"` |
+| Boolean | `true` | `"boolean"` |
+| Undefined | `undefined` | `"undefined"` |
+| Null | `null` | `"object"` ⚠️ |
+| Symbol | `Symbol("id")` | `"symbol"` |
+| BigInt | `123n` | `"bigint"` |
+
+---
+
+# 2️⃣ Non-Primitive (Reference) Data Types
+
+Reference types store **references (memory addresses)** to objects.
+
+> 📌 Variables store the **address/reference**, not the actual object.
+
+---
+
+## 1. Object
+
+Stores data as key-value pairs.
+
+```javascript
+let obj = {
+    name: "Alice",
+    age: 30
+};
+
+console.log(obj);
+console.log(typeof obj);
+```
+
+### Output
+
+```text
+{ name: "Alice", age: 30 }
+object
+```
+
+---
+
+## 2. Array
+
+Stores multiple values in an ordered collection.
+
+```javascript
+let arr = [1, 2, 3, 4, 5];
+
+console.log(arr);
+console.log(typeof arr);
+```
+
+### Output
+
+```text
+[1, 2, 3, 4, 5]
+object
+```
+
+---
+
+### Proper Array Check
+
+```javascript
+console.log(Array.isArray(arr));
+```
+
+### Output
+
+```text
+true
+```
+
+---
+
+## 3. Function
+
+Functions are callable objects.
+
+```javascript
+function greet() {
+    console.log("Hello!");
+}
+
+greet();
+
+console.log(typeof greet);
+```
+
+### Output
+
+```text
+Hello!
+function
+```
+
+---
+
+# 🔍 Primitive vs Reference Types
+
+| Feature | Primitive | Reference |
+|----------|------------|------------|
+| Stores | Actual Value | Memory Reference |
+| Mutable | ❌ No | ✅ Yes |
+| Compared By | Value | Reference |
+| Examples | Number, String | Object, Array |
+| Memory | Stack | Heap |
+
+---
+
+# 📌 Comparison Examples
+
+---
+
+## Primitive Comparison
+
+```javascript
+let a = 10;
+let b = 10;
+
+console.log(a === b);
+```
+
+### Output
+
+```text
+true
+```
+
+Because:
+
+```text
+Values are compared.
+```
+
+---
+
+## Object Comparison
+
+```javascript
+let obj1 = { name: "Alice" };
+let obj2 = { name: "Alice" };
+
+console.log(obj1 === obj2);
+```
+
+### Output
+
+```text
+false
+```
+
+Because:
+
+```text
+Different memory references.
+```
+
+---
+
+## Same Reference
+
+```javascript
+let obj3 = obj1;
+
+console.log(obj1 === obj3);
+```
+
+### Output
+
+```text
+true
+```
+
+---
+
+# 📦 Memory Representation
 
 ## Primitive Types
 
-| Type | Example | Mutable | Typeof |
-|------|---------|---------|--------|
-| String | `"Hello"`, `'text'` | No | "string" |
-| Number | `42`, `3.14`, `NaN` | No | "number" |
-| Boolean | `true`, `false` | No | "boolean" |
-| Undefined | `undefined` | No | "undefined" |
-| Null | `null` | No | "object" |
-| Symbol | `Symbol('id')` | No | "symbol" |
-| BigInt | `123n`, `BigInt(123)` | No | "bigint" |
+```text
+Stack Memory
 
-## Object Type
-
-```javascript
-// All are Objects
-let obj = { name: "John" };           // Object literal
-let arr = [1, 2, 3];                  // Array
-let func = function() {};             // Function
-let date = new Date();                // Date
-let regex = /pattern/;                // Regular Expression
-let map = new Map();                  // Map
-let set = new Set();                  // Set
+num
+ ↓
+42
 ```
 
-## Type Checking
+---
 
-### typeof Operator
-```javascript
-typeof "text"       // "string"
-typeof 42          // "number"
-typeof true        // "boolean"
-typeof undefined   // "undefined"
-typeof null        // "object" (quirk!)
-typeof Symbol()    // "symbol"
-typeof 123n        // "bigint"
-typeof {}          // "object"
-typeof []          // "object"
-typeof function(){}  // "function"
+## Reference Types
+
+```text
+Stack Memory          Heap Memory
+
+obj ───────────────► { name: "Alice" }
 ```
 
-### instanceof Operator
-```javascript
-[] instanceof Array         // true
-{} instanceof Object        // true
-function(){} instanceof Function  // true
-new Date() instanceof Date  // true
+---
+
+# 🎯 Important Interview Questions
+
+---
+
+## How many primitive data types are there?
+
+```text
+7 Primitive Types
 ```
 
-## Truthy vs Falsy
-
-### Falsy Values
-```javascript
-false
-0
-0n         // BigInt
-""         // Empty string
-null
-undefined
-NaN
+```text
+Number
+String
+Boolean
+Undefined
+Null
+Symbol
+BigInt
 ```
 
-All other values are truthy.
+---
 
-## Type Coercion
+## Are arrays primitive?
 
-### String Coercion
-```javascript
-String(42)          // "42"
-String(true)        // "true"
-String(null)        // "null"
-42 + ""             // "42"
+```text
+❌ No
 ```
 
-### Number Coercion
-```javascript
-Number("42")        // 42
-Number(true)        // 1
-Number(false)       // 0
-Number(null)        // 0
-+"42"               // 42
-```
-
-### Boolean Coercion
-```javascript
-Boolean(1)          // true
-Boolean(0)          // false
-Boolean("text")     // true
-Boolean("")         // false
-!!0                 // false (double NOT operator)
-```
-
-## Special Values
-
-### NaN (Not-a-Number)
-```javascript
-NaN === NaN         // false
-isNaN(NaN)          // true
-Number.isNaN(NaN)   // true (strict check)
-```
-
-### Infinity
-```javascript
-Infinity
--Infinity
-1 / 0               // Infinity
-Number.POSITIVE_INFINITY
-Number.NEGATIVE_INFINITY
-```
-
-### Undefined vs Null
-```javascript
-let x;              // undefined (declared, not assigned)
-let y = null;       // null (explicitly set)
-x === y             // false
-x == y              // true (loose equality)
-x === undefined     // true
-y === null          // true
-```
-
-## Immutability of Primitives
+Arrays are **objects**.
 
 ```javascript
-let str = "Hello";
-str[0] = "J";
-console.log(str);   // "Hello" (unchanged, strings are immutable)
-
-let arr = [1, 2, 3];
-arr[0] = 99;
-console.log(arr);   // [99, 2, 3] (changed, arrays are mutable)
+typeof [];
 ```
 
-## Reference vs Value
+```text
+"object"
+```
 
-### Primitives (Pass by Value)
+---
+
+## Is a function an object?
+
+```text
+✅ Yes
+```
+
 ```javascript
-let a = 10;
-let b = a;
-b = 20;
-console.log(a);     // 10 (unchanged)
+typeof function() {};
 ```
 
-### Objects (Pass by Reference)
+```text
+"function"
+```
+
+---
+
+## Why does `typeof null` return `"object"`?
+
+Because of a **historical bug** in JavaScript.
+
+---
+
+# 🚀 Quick Revision
+
+```text
+Primitive Types
+────────────────
+Number
+String
+Boolean
+Undefined
+Null
+Symbol
+BigInt
+
+Reference Types
+────────────────
+Object
+Array
+Function
+```
+
+---
+
+# 💡 Memory Trick
+
+```text
+N S B U N S B
+
+Number
+String
+Boolean
+Undefined
+Null
+Symbol
+BigInt
+```
+
+### Reference Types
+
+```text
+O A F
+
+Object
+Array
+Function
+```
+
+---
+
+## ⚠️ Note About Your Code
+
+You have an extra character in your file:
+
 ```javascript
-let obj1 = { name: "John" };
-let obj2 = obj1;
-obj2.name = "Jane";
-console.log(obj1.name);  // "Jane" (changed)
+c
 ```
 
-## Best Practices
-- Understand the difference between primitives and objects
-- Always use strict equality (`===`) unless you have a specific reason
-- Be aware of truthy/falsy values in conditionals
-- Use `typeof` for type checking primitives, `instanceof` for objects
-- Remember that `typeof null` returns "object"
+Remove it:
+
+```javascript
+// ❌ Wrong
+c
+
+// ✅ Correct
+// (Delete this line)
+```
+
+Otherwise, JavaScript will throw:
+
+```text
+ReferenceError: c is not defined
+```
+
+---
+
+## 📝 Final Summary
+
+```text
+Primitive Types
+→ Store actual values
+→ Immutable
+→ Compared by value
+
+Reference Types
+→ Store references
+→ Mutable
+→ Compared by reference
+```
+
+> 🎯 **Golden Rule:** If it is not one of the **7 primitive types**, it is generally treated as an **object/reference type** in JavaScript.

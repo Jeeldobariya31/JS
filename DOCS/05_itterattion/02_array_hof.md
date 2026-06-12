@@ -1,383 +1,1029 @@
+# 📘 JavaScript Array Higher-Order Functions (HOF)
+
+Array Higher-Order Functions (HOFs) are methods that **accept callback functions** and operate on array elements.
+
+```text
+HOF = Function that takes another function as an argument
+```
+
+---
+
+# 🎯 What is a Higher-Order Function?
+
+A function is called a **Higher-Order Function** if it:
+
+```text
+✔ Accepts another function as an argument
+
+OR
+
+✔ Returns another function
+```
+
+---
+
 # Array Higher-Order Functions
 
-## Overview
-Advanced array methods that take functions as parameters for array transformation and manipulation.
+```text
+1. forEach()
 
-## forEach() Method
+2. map()
 
-Executes function for each array element:
+3. filter()
 
-```javascript
-let arr = [1, 2, 3];
-arr.forEach(function(item) {
-    console.log(item);             // 1, 2, 3
-});
-
-// With arrow function
-arr.forEach(item => console.log(item));
+4. reduce()
 ```
 
-### forEach with Index and Array
-```javascript
-let arr = ["a", "b", "c"];
+---
 
-arr.forEach(function(item, index, array) {
-    console.log(index + ": " + item);
-    // 0: a
-    // 1: b
-    // 2: c
-});
+# Common Characteristics
+
+```text
+✔ Iterate through arrays
+
+✔ Use callback functions
+
+✔ Improve readability
+
+✔ Reduce boilerplate code
+
+✔ Mostly non-mutating
 ```
 
-### forEach Return Value
+---
+
+# 1️⃣ `forEach()`
+
+Used for **looping** through array elements.
+
+---
+
+## Syntax
+
 ```javascript
-let result = [1, 2, 3].forEach(x => x * 2);
-console.log(result);               // undefined (forEach returns nothing)
+array.forEach(
+
+    (
+
+        element,
+
+        index,
+
+        array
+    ) => {
+
+        // code
+    }
+);
 ```
 
-## map() Method
+---
 
-Transforms each element and returns new array:
+# Parameters
+
+| Parameter | Description |
+|------------|-------------|
+| element | Current element |
+| index | Current index |
+| array | Original array |
+
+---
+
+# Example
 
 ```javascript
-let arr = [1, 2, 3, 4];
-let doubled = arr.map(x => x * 2);
-console.log(doubled);              // [2, 4, 6, 8]
-```
+const nums = [
 
-### Complex Transformations
-```javascript
-let numbers = [1, 2, 3];
-let transformed = numbers.map(x => ({
-    original: x,
-    doubled: x * 2,
-    squared: x * x
-}));
-console.log(transformed);
-// [
-//   { original: 1, doubled: 2, squared: 1 },
-//   { original: 2, doubled: 4, squared: 4 },
-//   { original: 3, doubled: 6, squared: 9 }
-// ]
-```
+    10,
 
-### Extract Properties
-```javascript
-let users = [
-    { id: 1, name: "John" },
-    { id: 2, name: "Jane" },
-    { id: 3, name: "Bob" }
+    20,
+
+    30
 ];
 
-let names = users.map(user => user.name);
-console.log(names);                // ["John", "Jane", "Bob"]
+nums.forEach(
+
+    (
+
+        value,
+
+        index
+    ) => {
+
+        console.log(
+
+            index,
+
+            value
+        );
+    }
+);
 ```
 
-### Convert Types
-```javascript
-let strings = ["1", "2", "3"];
-let numbers = strings.map(str => parseInt(str));
-console.log(numbers);              // [1, 2, 3]
+---
+
+### Output
+
+```text
+0 10
+
+1 20
+
+2 30
 ```
 
-## filter() Method
+---
 
-Creates array with elements that pass test:
-
-```javascript
-let arr = [1, 2, 3, 4, 5, 6];
-let evens = arr.filter(x => x % 2 === 0);
-console.log(evens);                // [2, 4, 6]
-```
-
-### Filter Objects
-```javascript
-let users = [
-    { name: "John", age: 25 },
-    { name: "Jane", age: 30 },
-    { name: "Bob", age: 20 }
-];
-
-let adults = users.filter(user => user.age >= 25);
-console.log(adults);
-// [
-//   { name: 'John', age: 25 },
-//   { name: 'Jane', age: 30 }
-// ]
-```
-
-### Multiple Filters
-```javascript
-let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
-let filtered = numbers
-    .filter(x => x > 3)            // [4, 5, 6, 7, 8, 9, 10]
-    .filter(x => x % 2 === 0);     // [4, 6, 8, 10]
-
-console.log(filtered);
-```
-
-### Remove Falsy Values
-```javascript
-let arr = [0, 1, false, 2, "", 3, null, 4, undefined];
-let clean = arr.filter(Boolean);
-console.log(clean);                // [1, 2, 3, 4]
-```
-
-## find() Method
-
-Returns first element that passes test:
+# Return Value
 
 ```javascript
-let arr = [1, 2, 3, 4, 5];
-let first = arr.find(x => x > 3);
-console.log(first);                // 4
-```
-
-### Find Object
-```javascript
-let users = [
-    { id: 1, name: "John" },
-    { id: 2, name: "Jane" },
-    { id: 3, name: "Bob" }
-];
-
-let user = users.find(u => u.name === "Jane");
-console.log(user);                 // { id: 2, name: 'Jane' }
-```
-
-### Find with Not Found
-```javascript
-let arr = [1, 2, 3];
-let result = arr.find(x => x > 10);
-console.log(result);               // undefined
-```
-
-## findIndex() Method
-
-Returns index of first element that passes test:
-
-```javascript
-let arr = [10, 20, 30, 40];
-let index = arr.findIndex(x => x > 25);
-console.log(index);                // 2
-```
-
-### Find Index of Object
-```javascript
-let users = [
-    { id: 1, name: "John" },
-    { id: 2, name: "Jane" },
-    { id: 3, name: "Bob" }
-];
-
-let index = users.findIndex(u => u.id === 2);
-console.log(index);                // 1
-```
-
-## some() Method
-
-Returns true if ANY element passes test:
-
-```javascript
-let arr = [1, 2, 3, 4, 5];
-console.log(arr.some(x => x > 3));    // true
-console.log(arr.some(x => x > 10));   // false
-```
-
-### Validate Data
-```javascript
-let users = [
-    { name: "John", active: false },
-    { name: "Jane", active: true },
-    { name: "Bob", active: false }
-];
-
-let hasActive = users.some(u => u.active);
-console.log(hasActive);            // true
-```
-
-## every() Method
-
-Returns true if ALL elements pass test:
-
-```javascript
-let arr = [1, 2, 3, 4, 5];
-console.log(arr.every(x => x > 0));    // true
-console.log(arr.every(x => x > 3));    // false
-```
-
-### Validate All Objects
-```javascript
-let users = [
-    { name: "John", age: 25 },
-    { name: "Jane", age: 30 },
-    { name: "Bob", age: 20 }
-];
-
-let allAdults = users.every(u => u.age >= 18);
-console.log(allAdults);            // true
-```
-
-## reduce() Method
-
-Accumulates value from array:
-
-```javascript
-let arr = [1, 2, 3, 4];
-let sum = arr.reduce((accumulator, current) => {
-    return accumulator + current;
-}, 0);
-console.log(sum);                  // 10
-```
-
-### Reduce with Initial Value
-```javascript
-let arr = [1, 2, 3];
-
-// With initial value 10
-let sum = arr.reduce((acc, x) => acc + x, 10);
-console.log(sum);                  // 16
-
-// Without initial value
-let sum2 = arr.reduce((acc, x) => acc + x);
-console.log(sum2);                 // 6
-```
-
-### Reduce to Object
-```javascript
-let arr = [
-    { name: "John", score: 90 },
-    { name: "Jane", score: 85 },
-    { name: "Bob", score: 90 }
-];
-
-let scoreMap = arr.reduce((acc, person) => {
-    acc[person.name] = person.score;
-    return acc;
-}, {});
-
-console.log(scoreMap);
-// { John: 90, Jane: 85, Bob: 90 }
-```
-
-### Count Occurrences
-```javascript
-let arr = ["a", "b", "a", "c", "a", "b"];
-
-let counts = arr.reduce((acc, char) => {
-    acc[char] = (acc[char] || 0) + 1;
-    return acc;
-}, {});
-
-console.log(counts);               // { a: 3, b: 2, c: 1 }
-```
-
-### Flatten Array
-```javascript
-let arr = [[1, 2], [3, 4], [5, 6]];
-
-let flat = arr.reduce((acc, subArr) => {
-    return acc.concat(subArr);
-}, []);
-
-console.log(flat);                 // [1, 2, 3, 4, 5, 6]
-```
-
-## reduceRight() Method
-
-Like reduce but processes from right to left:
-
-```javascript
-let arr = [1, 2, 3, 4];
-let result = arr.reduceRight((acc, x) => {
-    return acc + "-" + x;
-}, "");
-
-console.log(result);               // "-4-3-2-1"
-```
-
-## Chaining Array Methods
-
-Combining multiple operations:
-
-```javascript
-let numbers = [1, 2, 3, 4, 5, 6];
-
-let result = numbers
-    .filter(x => x > 2)            // [3, 4, 5, 6]
-    .map(x => x * 2)               // [6, 8, 10, 12]
-    .reduce((a, b) => a + b, 0);   // 36
+const result = nums.forEach(() => {});
 
 console.log(result);
 ```
 
-### Complex Example
+---
+
+### Output
+
+```text
+undefined
+```
+
+---
+
+# Use Cases
+
+```text
+✔ Logging
+
+✔ Updating DOM
+
+✔ Side Effects
+```
+
+---
+
+# Limitations
+
+```text
+❌ No return value
+
+❌ Cannot use break
+
+❌ Cannot use continue
+```
+
+---
+
+# 2️⃣ `map()` ⭐⭐⭐
+
+Transforms elements into a **new array**.
+
+---
+
+## Syntax
+
 ```javascript
-let users = [
-    { name: "John", age: 25, active: true },
-    { name: "Jane", age: 30, active: false },
-    { name: "Bob", age: 35, active: true },
-    { name: "Alice", age: 22, active: true }
+array.map(
+
+    (
+
+        element,
+
+        index,
+
+        array
+    ) => {
+
+        return transformedValue;
+    }
+);
+```
+
+---
+
+# Example
+
+```javascript
+const nums = [
+
+    1,
+
+    2,
+
+    3,
+
+    4
 ];
 
-let activeAdults = users
-    .filter(u => u.active)         // Only active users
-    .filter(u => u.age >= 25)      // Only adults
-    .map(u => u.name)              // Get names
-    .sort();                        // Sort alphabetically
+const doubled = nums.map(
 
-console.log(activeAdults);         // ["Bob", "John"]
+    n => n * 2
+);
+
+console.log(doubled);
 ```
 
-## Practical Examples
+---
 
-### Sum All Numbers
-```javascript
-[1, 2, 3, 4, 5].reduce((a, b) => a + b, 0);  // 15
+### Output
+
+```text
+[2, 4, 6, 8]
 ```
 
-### Find Maximum
+---
+
+# Original Array
+
 ```javascript
-[3, 10, 5, 2, 9].reduce((max, x) => x > max ? x : max);  // 10
+console.log(nums);
 ```
 
-### Group by Property
+---
+
+### Output
+
+```text
+[1, 2, 3, 4]
+```
+
+---
+
+# Returning Objects
+
 ```javascript
-let data = [
-    { category: "A", value: 10 },
-    { category: "B", value: 20 },
-    { category: "A", value: 15 }
+const users = [
+
+    "Jeel",
+
+    "Asha",
+
+    "Ravi"
 ];
 
-let grouped = data.reduce((acc, item) => {
-    if (!acc[item.category]) acc[item.category] = [];
-    acc[item.category].push(item.value);
-    return acc;
-}, {});
+const objects = users.map(
 
-console.log(grouped);
-// { A: [10, 15], B: [20] }
+    name => ({
+
+        name
+    })
+);
 ```
 
-### Unique Values
+---
+
+### Output
+
 ```javascript
-let arr = [1, 2, 2, 3, 3, 3, 4];
-let unique = arr.reduce((acc, x) => {
-    if (!acc.includes(x)) acc.push(x);
-    return acc;
-}, []);
+[
+    { name: "Jeel" },
 
-console.log(unique);               // [1, 2, 3, 4]
+    { name: "Asha" },
+
+    { name: "Ravi" }
+]
 ```
 
-## Best Practices
-- Use map() for transformations
-- Use filter() for filtering conditions
-- Use reduce() for accumulating values
-- Chain methods for readable transformations
-- Use find() instead of filter() when you need one element
-- Use some()/every() for boolean checks
-- Avoid modifying original array unless necessary
-- Keep functions in methods simple and readable
-- Consider performance with large arrays
+---
+
+# Use Cases
+
+```text
+✔ Data Transformation
+
+✔ Formatting API Data
+
+✔ Creating JSX Lists (React)
+```
+
+---
+
+# 3️⃣ `filter()` ⭐⭐⭐
+
+Keeps elements that satisfy a condition.
+
+---
+
+## Syntax
+
+```javascript
+array.filter(
+
+    (
+
+        element,
+
+        index,
+
+        array
+    ) => {
+
+        return condition;
+    }
+);
+```
+
+---
+
+# Example
+
+```javascript
+const marks = [
+
+    30,
+
+    45,
+
+    80,
+
+    10,
+
+    60
+];
+
+const passed = marks.filter(
+
+    mark => mark >= 40
+);
+
+console.log(passed);
+```
+
+---
+
+### Output
+
+```text
+[45, 80, 60]
+```
+
+---
+
+# Original Array
+
+```javascript
+console.log(marks);
+```
+
+---
+
+### Output
+
+```text
+[30, 45, 80, 10, 60]
+```
+
+---
+
+# Use Cases
+
+```text
+✔ Search Results
+
+✔ Validation
+
+✔ Remove Unwanted Data
+```
+
+---
+
+# 4️⃣ `reduce()` ⭐⭐⭐⭐⭐
+
+Reduces an array into **one final value**.
+
+---
+
+## Syntax
+
+```javascript
+array.reduce(
+
+    (
+
+        accumulator,
+
+        currentValue,
+
+        index,
+
+        array
+    ) => {
+
+        return newAccumulator;
+    },
+
+    initialValue
+);
+```
+
+---
+
+# Parameters
+
+| Parameter | Description |
+|------------|-------------|
+| accumulator | Previous result |
+| currentValue | Current element |
+| index | Current index |
+| initialValue | Starting value |
+
+---
+
+# Sum Example
+
+```javascript
+const nums = [
+
+    10,
+
+    20,
+
+    30
+];
+
+const total = nums.reduce(
+
+    (
+
+        acc,
+
+        value
+    ) => {
+
+        return acc + value;
+    },
+
+    0
+);
+
+console.log(total);
+```
+
+---
+
+### Output
+
+```text
+60
+```
+
+---
+
+# Reduce Flow
+
+```text
+Initial Value = 0
+
+↓
+
+0 + 10 = 10
+
+↓
+
+10 + 20 = 30
+
+↓
+
+30 + 30 = 60
+```
+
+---
+
+# Finding Maximum
+
+```javascript
+const nums = [
+
+    10,
+
+    20,
+
+    30
+];
+
+const max = nums.reduce(
+
+    (
+
+        biggest,
+
+        value
+    ) =>
+
+        value > biggest
+
+            ? value
+
+            : biggest
+);
+```
+
+---
+
+### Output
+
+```text
+30
+```
+
+---
+
+# Frequency Counter Example
+
+```javascript
+const letters = [
+
+    "a",
+
+    "b",
+
+    "a",
+
+    "c",
+
+    "b",
+
+    "a"
+];
+
+const frequency = letters.reduce(
+
+    (
+
+        acc,
+
+        ch
+    ) => {
+
+        acc[ch] = (
+
+            acc[ch] || 0
+        ) + 1;
+
+        return acc;
+    },
+
+    {}
+);
+```
+
+---
+
+### Output
+
+```javascript
+{
+    a: 3,
+
+    b: 2,
+
+    c: 1
+}
+```
+
+---
+
+# Execution Flow
+
+---
+
+# `forEach()`
+
+```text
+Element
+
+↓
+
+Callback Executes
+
+↓
+
+No Return Used
+```
+
+---
+
+# `map()`
+
+```text
+Element
+
+↓
+
+Transform
+
+↓
+
+Collect Result
+
+↓
+
+New Array
+```
+
+---
+
+# `filter()`
+
+```text
+Element
+
+↓
+
+Condition Check
+
+↓
+
+true  → Keep
+
+false → Remove
+```
+
+---
+
+# `reduce()`
+
+```text
+Accumulator
+
+↓
+
+Current Value
+
+↓
+
+Return New Accumulator
+
+↓
+
+Repeat
+
+↓
+
+Final Value
+```
+
+---
+
+# Comparison Table ⭐⭐⭐
+
+| Feature | forEach | map | filter | reduce |
+|----------|----------|-----|---------|---------|
+| Returns New Array | ❌ | ✅ | ✅ | ❌ |
+| Returns Single Value | ❌ | ❌ | ❌ | ✅ |
+| Used for Transformation | ❌ | ✅ | ❌ | ⚠️ |
+| Used for Filtering | ❌ | ❌ | ✅ | ⚠️ |
+| Used for Side Effects | ✅ | ❌ | ❌ | ❌ |
+| Can Replace Others | ❌ | ❌ | ❌ | ✅ |
+
+---
+
+# Real-World Examples
+
+---
+
+# Add GST
+
+```javascript
+const prices = [
+
+    100,
+
+    200,
+
+    300
+];
+
+const withGST = prices.map(
+
+    price => price * 1.18
+);
+```
+
+---
+
+### Output
+
+```text
+[118, 236, 354]
+```
+
+---
+
+# Filter Odd Numbers
+
+```javascript
+const odds = [
+
+    1,
+
+    2,
+
+    3,
+
+    4,
+
+    5
+].filter(
+
+    n => n % 2 !== 0
+);
+```
+
+---
+
+### Output
+
+```text
+[1, 3, 5]
+```
+
+---
+
+# Recreating `map()`
+
+```javascript
+function myMap(
+
+    arr,
+
+    callback
+) {
+
+    const result = [];
+
+    for (
+
+        let i = 0;
+
+        i < arr.length;
+
+        i++
+    ) {
+
+        result.push(
+
+            callback(
+
+                arr[i],
+
+                i
+            )
+        );
+    }
+
+    return result;
+}
+```
+
+---
+
+# Recreating `filter()`
+
+```javascript
+function myFilter(
+
+    arr,
+
+    callback
+) {
+
+    const result = [];
+
+    for (
+
+        let i = 0;
+
+        i < arr.length;
+
+        i++
+    ) {
+
+        if (
+
+            callback(
+
+                arr[i],
+
+                i
+            )
+        ) {
+
+            result.push(
+
+                arr[i]
+            );
+        }
+    }
+
+    return result;
+}
+```
+
+---
+
+# Recreating `reduce()`
+
+```javascript
+function myReduce(
+
+    arr,
+
+    callback,
+
+    initialValue
+) {
+
+    let acc = initialValue;
+
+    for (
+
+        let i = 0;
+
+        i < arr.length;
+
+        i++
+    ) {
+
+        acc = callback(
+
+            acc,
+
+            arr[i],
+
+            i
+        );
+    }
+
+    return acc;
+}
+```
+
+---
+
+# 🎯 Interview Questions
+
+---
+
+## Difference between `map()` and `forEach()`?
+
+```text
+map()
+
+↓
+
+Returns New Array
+
+forEach()
+
+↓
+
+Returns undefined
+```
+
+---
+
+## Difference between `filter()` and `find()`?
+
+```text
+filter()
+
+↓
+
+Returns ALL matches
+
+find()
+
+↓
+
+Returns FIRST match
+```
+
+---
+
+## Can `map()` modify original array?
+
+```text
+❌ No
+
+Unless callback manually mutates objects.
+```
+
+---
+
+## Does `reduce()` always return a number?
+
+```text
+❌ No
+
+Can return:
+
+✔ Object
+
+✔ Array
+
+✔ String
+
+✔ Boolean
+
+✔ Number
+```
+
+---
+
+## What is an accumulator?
+
+```text
+Value carried forward between reduce iterations.
+```
+
+---
+
+## Why can't `forEach()` use break?
+
+```text
+Because it is an iterator method,
+
+not a loop statement.
+```
+
+---
+
+## What happens if `map()` callback doesn't return?
+
+```javascript
+[undefined, undefined, undefined]
+```
+
+---
+
+## Which HOF is most powerful?
+
+```text
+reduce()
+```
+
+---
+
+# 🚀 Quick Revision
+
+```text
+forEach
+
+↓
+
+Loop Only
+
+map
+
+↓
+
+Transform
+
+filter
+
+↓
+
+Select
+
+reduce
+
+↓
+
+Combine
+```
+
+---
+
+# 💡 Memory Trick
+
+```text
+LTSC
+
+Loop
+
+Transform
+
+Select
+
+Combine
+```
+
+---
+
+# 🏆 Most Important Topics
+
+⭐⭐⭐ `map()`
+
+⭐⭐⭐ `filter()`
+
+⭐⭐⭐⭐ `reduce()`
+
+⭐⭐⭐ `forEach()`
+
+⭐⭐⭐ Callback Functions
+
+> 🎯 **Golden Rule:**  
+> Use **`forEach()` to perform actions**, **`map()` to transform**, **`filter()` to select**, and **`reduce()` to combine data into a single result**.

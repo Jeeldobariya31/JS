@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+        <!-- ✅ Standard HTML5 Head -->
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>DOM Parent / Child / Traversal Demo - Jeel</title>
+
+        <style>
+                body {
+                        font-family: Arial, sans-serif;
+                        background: #f5f5f5;
+                        margin: 0;
+                        padding: 20px;
+                }
+
+                h1,
+                h2 {
+                        color: #333;
+                }
+
+                .section {
+                        background: #ffffff;
+                        padding: 16px;
+                        margin-bottom: 16px;
+                        border-radius: 8px;
+                        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+                }
+
+                .tree-box {
+                        border: 1px solid #ccc;
+                        padding: 10px;
+                        margin-top: 8px;
+                }
+
+                .node {
+                        margin: 4px;
+                        padding: 6px;
+                        border: 1px dashed #aaa;
+                }
+
+                .node-label {
+                        font-weight: bold;
+                }
+
+                .btn {
+                        padding: 6px 12px;
+                        border: none;
+                        background: #1976d2;
+                        color: #fff;
+                        border-radius: 4px;
+                        cursor: pointer;
+                        margin-top: 6px;
+                        margin-right: 6px;
+                        font-size: 13px;
+                }
+
+                .btn:hover {
+                        opacity: 0.9;
+                }
+
+                .highlight {
+                        background: #e1f5fe;
+                }
+
+                #log-box {
+                        margin-top: 8px;
+                        min-height: 40px;
+                        background: #f1f8e9;
+                        padding: 6px;
+                        border-radius: 4px;
+                        font-size: 13px;
+                        white-space: pre-line;
+                }
+
+                code {
+                        background: #eee;
+                        padding: 1px 4px;
+                        border-radius: 3px;
+                        font-size: 13px;
+                }
+        </style>
+</head>
+
+<body>
+        <h1>DOM Parent / Child / Traversal Demo (Jeel)</h1>
+        <p>
+                Open DevTools → Console to see extra logs from
+                <code>02_dom_parent_child.js</code>.
+        </p>
+
+        <!-- =========================================================================
+         PARENT / CHILD TREE FOR DEMO
+    ========================================================================= -->
+        <section class="section" id="sec-tree">
+                <h2>1. DOM Tree Example</h2>
+                <p>
+                        Used by <code>02_dom_parent_child.js</code> to demonstrate
+                        <b>parentNode</b>, <b>parentElement</b>, <b>children</b>,
+                        <b>childNodes</b>, <b>firstElementChild</b>,
+                        <b>nextElementSibling</b>, <b>closest()</b>, <b>contains()</b>, etc.
+                </p>
+
+                <div id="root" class="tree-box node">
+                        <span class="node-label">ROOT (#root)</span>
+                        <div id="section-1" class="node">
+                                <span class="node-label">Section 1 (#section-1)</span>
+                                <p id="p-1-1" class="node">
+                                        <span class="node-label">Paragraph 1.1 (#p-1-1)</span>
+                                </p>
+                                <p id="p-1-2" class="node">
+                                        <span class="node-label">Paragraph 1.2 (#p-1-2)</span>
+                                </p>
+                        </div>
+
+                        <div id="section-2" class="node">
+                                <span class="node-label">Section 2 (#section-2)</span>
+                                <ul id="list-2" class="node">
+                                        <li id="li-2-1" class="node">Item 2.1 (#li-2-1)</li>
+                                        <li id="li-2-2" class="node">Item 2.2 (#li-2-2)</li>
+                                </ul>
+                        </div>
+                </div>
+
+                <button id="btn-log-root-children" class="btn">
+                        Log Root Children
+                </button>
+                <button id="btn-log-section-1" class="btn">
+                        Log Section-1 Parent & Children
+                </button>
+                <button id="btn-log-li-2-1" class="btn">
+                        Log li-2-1 Relationships
+                </button>
+                <button id="btn-closest-demo" class="btn">
+                        closest() & contains() Demo
+                </button>
+
+                <div id="log-box">Logs will appear here...</div>
+        </section>
+
+        <!-- =========================================================================
+         JS FILE
+    ========================================================================= -->
+        <script src="05_parent_child.js" defer></script>
+</body>
+
+</html>

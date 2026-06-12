@@ -1,340 +1,880 @@
-# JavaScript Execution Context (JSEC)
+# 📘 JavaScript Execution Context (Complete Guide)
 
-## Overview
-Understanding how JavaScript executes code, including execution contexts and call stacks.
+Execution Context is the **environment in which JavaScript code is evaluated and executed**.
 
-## Execution Context
-
-Every function call creates an execution context with three phases:
-
-### 1. Creation Phase
-- Memory space allocated for variables and functions
-- this binding determined
-- scope chain created
-
-### 2. Execution Phase
-- Code executed line by line
-- Variables assigned values
-- Functions called
-
-### 3. Destruction Phase
-- Execution context destroyed
-- Memory cleaned up
-
-## Global Execution Context
-
-Created when script starts:
-
-```javascript
-// Creation Phase
-var x;
-var y;
-function add(a, b) { }
-
-// Execution Phase
-x = 10;
-y = 20;
-console.log(x + y);         // 30
+```text
+Execution Context = Where JavaScript Runs
 ```
 
-## Function Execution Context
+---
 
-Created for each function call:
+# 🎯 Definition
 
-```javascript
-function outer() {
-    let a = 1;              // Creation: memory allocated
-    
-    function inner() {      // Creation: function defined
-        let b = 2;          // Creation: memory allocated
-        return a + b;       // Execution: calculate and return
-    }
-    
-    return inner();         // Execution: call inner
-}
+```text
+Execution Context is an environment that contains:
 
-outer();                    // Creates execution context for outer()
+✔ Variables
+✔ Functions
+✔ Scope Information
+✔ this Binding
+✔ Instructions to Execute
 ```
 
-## Call Stack
+---
 
-Tracks function executions:
+# 📚 Types of Execution Context
 
-```javascript
-function first() {
-    second();
-}
+JavaScript has **3 types** of Execution Context.
 
-function second() {
-    third();
-}
+| Type | Description |
+|--------|-------------|
+| Global Execution Context (GEC) | Created when JS file starts |
+| Function Execution Context (FEC) | Created whenever a function is called |
+| Eval Execution Context | Created by `eval()` (rarely used) |
 
-function third() {
-    console.log("In third");
-}
+---
 
-first();
+# 🌍 1️⃣ Global Execution Context (GEC)
 
-// Call Stack:
-// 1. Global context pushed
-// 2. first() pushed
-// 3. second() pushed  
-// 4. third() pushed
-// 5. third() executes and pops
-// 6. second() pops
-// 7. first() pops
-// 8. Global context pops
-```
-
-### Stack Overflow
-Exceeding call stack limit:
+The first execution context created.
 
 ```javascript
-function recursiveInfinite() {
-    recursiveInfinite();  // Infinite recursion
-}
-
-recursiveInfinite();      // RangeError: Maximum call stack exceeded
+console.log("Hello");
 ```
 
-Correct recursion:
+As soon as JavaScript starts:
+
+```text
+Global Execution Context Created
+```
+
+---
+
+# GEC Contains
+
+```text
+✔ Global Object
+
+✔ this Binding
+
+✔ Global Memory
+```
+
+---
+
+## Browser
+
 ```javascript
-function factorial(n) {
-    if (n <= 1) return 1;  // Base case (prevents infinite recursion)
-    return n * factorial(n - 1);
+console.log(this);
+```
+
+### Output
+
+```text
+window
+```
+
+---
+
+## Node.js
+
+```text
+global
+```
+
+or
+
+```text
+{}
+```
+
+(depending on module type)
+
+---
+
+# ⚙️ Two Phases of Execution Context
+
+Every Execution Context goes through **two phases**.
+
+```text
+1. Memory Creation Phase
+
+2. Code Execution Phase
+```
+
+---
+
+# 1️⃣ Memory Creation Phase
+
+Also called:
+
+```text
+Hoisting Phase
+```
+
+JavaScript scans the code.
+
+---
+
+## What Happens?
+
+| Item | Memory Phase |
+|--------|-------------|
+| var | undefined |
+| let | TDZ |
+| const | TDZ |
+| Function Declaration | Entire Function Stored |
+
+---
+
+## Example
+
+```javascript
+console.log(a);
+
+var a = 10;
+```
+
+---
+
+### Memory Phase
+
+```text
+a → undefined
+```
+
+---
+
+### Execution Phase
+
+```text
+undefined
+
+10
+```
+
+---
+
+# 2️⃣ Code Execution Phase
+
+Code executes **line by line**.
+
+---
+
+## Example
+
+```javascript
+var x = 10;
+
+x = x + 5;
+```
+
+---
+
+### Execution
+
+```text
+x = 10
+
+x = 15
+```
+
+---
+
+# Execution Context Lifecycle
+
+```text
+Creation
+    ↓
+
+Memory Phase
+    ↓
+
+Execution Phase
+    ↓
+
+Destruction
+```
+
+---
+
+# 🏠 2️⃣ Function Execution Context (FEC)
+
+Created **every time a function is invoked**.
+
+---
+
+## Example
+
+```javascript
+function add(a, b) {
+
+    let c = a + b;
+
+    return c;
 }
 
-factorial(5);             // Works correctly
+add(5, 10);
 ```
+
+---
+
+# FEC Contains
+
+```text
+✔ Parameters
+
+✔ Local Variables
+
+✔ arguments Object
+
+✔ this Binding
+
+✔ Lexical Environment Reference
+```
+
+---
+
+# FEC Example
+
+```text
+Function: add(5, 10)
+
+↓
+
+Memory
+
+a → 5
+
+b → 10
+
+c → undefined
+
+↓
+
+Execution
+
+c → 15
+
+return 15
+```
+
+---
+
+# 📦 Structure of Execution Context
+
+```text
+Execution Context
+
+↓
+
+Variable Environment
+
+↓
+
+Thread of Execution
+```
+
+---
 
 ## Variable Environment
 
-Each execution context has its own variable environment:
+Stores:
+
+```text
+var
+
+let
+
+const
+
+functions
+```
+
+---
+
+## Thread of Execution
+
+```text
+Line-by-line execution
+```
+
+---
+
+# 🌟 Hoisting
+
+Hoisting happens during **Memory Phase**.
+
+---
+
+# Function Declaration
 
 ```javascript
-var globalVar = "global";
+sayHi();
 
-function test() {
-    var functionVar = "function";
-    
-    if (true) {
-        let blockVar = "block";
-        console.log(globalVar);    // Accessible
-        console.log(functionVar);  // Accessible
-        console.log(blockVar);     // Accessible
-    }
-    
-    console.log(blockVar);         // ReferenceError
+function sayHi() {
+
+    console.log("Hi");
+}
+```
+
+---
+
+### Output
+
+```text
+Hi
+```
+
+---
+
+# var
+
+```javascript
+console.log(a);
+
+var a = 50;
+```
+
+---
+
+### Output
+
+```text
+undefined
+```
+
+---
+
+# let
+
+```javascript
+console.log(b);
+
+let b = 20;
+```
+
+---
+
+### Output
+
+```text
+ReferenceError
+```
+
+---
+
+# const
+
+```javascript
+console.log(c);
+
+const c = 30;
+```
+
+---
+
+### Output
+
+```text
+ReferenceError
+```
+
+---
+
+# 📊 Hoisting Summary
+
+| Type | Hoisted | Initial Value |
+|--------|----------|---------------|
+| var | ✅ | undefined |
+| let | ✅ | TDZ |
+| const | ✅ | TDZ |
+| Function | ✅ | Complete Function |
+
+---
+
+# ☠️ Temporal Dead Zone (TDZ)
+
+The period between:
+
+```text
+Hoisting
+    ↓
+
+Initialization
+```
+
+---
+
+# Example
+
+```javascript
+console.log(name);
+
+let name = "Jeel";
+```
+
+---
+
+### Output
+
+```text
+ReferenceError
+```
+
+---
+
+# Correct Usage
+
+```javascript
+let name = "Jeel";
+
+console.log(name);
+```
+
+---
+
+### Output
+
+```text
+Jeel
+```
+
+---
+
+# 📚 Call Stack ⭐⭐⭐
+
+JavaScript is **single-threaded**.
+
+It uses a **Call Stack** to manage Execution Contexts.
+
+---
+
+# LIFO Principle
+
+```text
+Last In
+
+First Out
+```
+
+---
+
+# Example
+
+```javascript
+function one() {
+
+    two();
 }
 
-test();
-```
+function two() {
 
-## this Binding
-
-Determined during creation phase:
-
-### Global Context
-```javascript
-console.log(this);         // window (browser) or global (Node.js)
-```
-
-### Function Context
-```javascript
-function test() {
-    console.log(this);     // window or global (if not in strict mode)
+    three();
 }
 
-test();
-```
+function three() {
 
-### Method Context
-```javascript
-let obj = {
-    method: function() {
-        console.log(this);  // obj
-    }
-};
-
-obj.method();
-```
-
-### Constructor Context
-```javascript
-function Person(name) {
-    this.name = name;      // this refers to new object
+    console.log("Done");
 }
 
-let john = new Person("John");
-console.log(john.name);    // "John"
+one();
 ```
 
-## Scope Chain
+---
 
-Hierarchy for variable lookup:
+# Call Stack Flow
+
+```text
+Global()
+
+↓
+
+one()
+
+↓
+
+two()
+
+↓
+
+three()
+
+↓
+
+three() removed
+
+↓
+
+two() removed
+
+↓
+
+one() removed
+
+↓
+
+Global()
+```
+
+---
+
+# Visualization
+
+```text
+┌─────────┐
+│ three() │
+├─────────┤
+│ two()   │
+├─────────┤
+│ one()   │
+├─────────┤
+│ Global  │
+└─────────┘
+```
+
+---
+
+# 🌐 Lexical Environment
+
+Each Execution Context stores:
+
+```text
+Local Memory
+
++
+
+Reference to Parent Scope
+```
+
+---
+
+# Example
 
 ```javascript
-let global = "global";
+let x = 10;
 
 function outer() {
-    let outerVar = "outer";
-    
+
+    let y = 20;
+
     function inner() {
-        let innerVar = "inner";
-        
-        // Scope chain: inner -> outer -> global
-        console.log(innerVar);     // Found in inner scope
-        console.log(outerVar);     // Found in outer scope
-        console.log(global);       // Found in global scope
+
+        let z = 30;
+
+        console.log(x, y, z);
     }
-    
+
     inner();
 }
 
 outer();
 ```
 
-### Scope Chain Lookup
-```javascript
-let x = "global";
+---
 
-function test() {
-    let x = "function";
-    
-    if (true) {
-        let x = "block";
-        console.log(x);    // "block" (found in block scope first)
-    }
-    
-    console.log(x);        // "function" (found in function scope)
-}
+### Output
 
-console.log(x);            // "global"
-test();
+```text
+10 20 30
 ```
 
-## Hoisting Mechanism
+---
 
-### var Hoisting
-All var declarations hoisted to top of execution context:
+# Scope Chain
 
-```javascript
-console.log(x);            // undefined (hoisted but not initialized)
-var x = 10;
-console.log(x);            // 10
+```text
+inner()
 
-// Internally JavaScript sees:
-var x;
-console.log(x);
-x = 10;
-console.log(x);
+↓
+
+outer()
+
+↓
+
+Global
+
+↓
+
+ReferenceError
 ```
 
-### Function Hoisting
-Function declarations fully hoisted:
+---
+
+# 🔄 Closures and Execution Context
+
+Closures preserve data even after FEC is removed.
+
+---
+
+## Example
 
 ```javascript
-test();                    // "Hello" (works before declaration)
+function counter() {
 
-function test() {
-    console.log("Hello");
-}
-```
-
-### let/const Hoisting (Temporal Dead Zone)
-Hoisted but not initialized (TDZ):
-
-```javascript
-console.log(x);            // ReferenceError (TDZ)
-let x = 10;
-```
-
-## Execution Context in Loops
-
-### var in Loop
-```javascript
-for (var i = 0; i < 3; i++) {
-    console.log(i);
-}
-console.log(i);            // 3 (var is function-scoped)
-```
-
-### let in Loop
-```javascript
-for (let i = 0; i < 3; i++) {
-    console.log(i);
-}
-console.log(i);            // ReferenceError (let is block-scoped)
-```
-
-## Execution Context with Closures
-
-Closure retains reference to outer execution context:
-
-```javascript
-function makeCounter() {
     let count = 0;
-    
+
     return function() {
-        count++;           // Accesses makeCounter's execution context
+
+        count++;
+
         return count;
     };
 }
 
-let counter = makeCounter();
-console.log(counter());    // 1
-console.log(counter());    // 2 (counter execution context still accessible)
+const c = counter();
+
+console.log(c());
+
+console.log(c());
 ```
 
-## Lexical Environment
+---
 
-Each execution context has lexical environment:
+### Output
+
+```text
+1
+
+2
+```
+
+---
+
+# Why?
+
+```text
+Closure keeps Execution Context alive.
+```
+
+---
+
+# ⚡ Arrow Functions and Execution Context
+
+Arrow Functions:
+
+```text
+✔ Have Execution Context
+
+❌ No own this
+
+❌ No own arguments
+
+❌ No prototype
+```
+
+---
+
+# Example
 
 ```javascript
-function outer() {
-    let a = 1;
-    
-    function middle() {
-        let b = 2;
-        
-        function inner() {
-            let c = 3;
-            console.log(a, b, c);  // All accessible via lexical environment
-        }
-        
-        inner();
+const obj = {
+
+    name: "Jeel",
+
+    normal() {
+
+        console.log(this.name);
+    },
+
+    arrow: () => {
+
+        console.log(this?.name);
     }
-    
-    middle();
-}
+};
 
-outer();                   // 1 2 3
+obj.normal();
+
+obj.arrow();
 ```
 
-## Event Loop and Execution Context
+---
 
-Asynchronous code doesn't block execution context:
+### Output
 
-```javascript
-console.log("Start");
+```text
+Jeel
 
-setTimeout(() => {
-    console.log("Timeout");  // Executes later, in new execution context
-}, 0);
-
-console.log("End");
-
-// Output:
-// Start
-// End
-// Timeout
+undefined
 ```
 
-## Best Practices
-- Understand execution context for proper variable scoping
-- Be aware of hoisting behavior with var vs let/const
-- Use let/const to avoid hoisting confusion
-- Understand call stack to debug errors
-- Know how this is determined in different contexts
-- Use closures intentionally for data encapsulation
-- Avoid infinite recursion (RangeError)
+---
+
+# 📊 Global vs Function EC
+
+| Feature | Global EC | Function EC |
+|----------|------------|-------------|
+| Created When | JS Starts | Function Call |
+| Count | One | Many |
+| Contains Local Variables | ❌ | ✅ |
+| Has Global Object | ✅ | ❌ |
+| Destroyed | End of Program | After Return |
+
+---
+
+# 🎯 Interview Questions
+
+---
+
+## What is Execution Context?
+
+```text
+Environment where JavaScript code executes.
+```
+
+---
+
+## Types of Execution Context?
+
+```text
+Global
+
+Function
+
+Eval
+```
+
+---
+
+## Two Phases?
+
+```text
+Memory Creation
+
+Code Execution
+```
+
+---
+
+## What happens during Memory Phase?
+
+```text
+Hoisting occurs.
+```
+
+---
+
+## What is Hoisting?
+
+```text
+Variables and functions moved to memory before execution.
+```
+
+---
+
+## What is TDZ?
+
+```text
+Period between hoisting and initialization of let/const.
+```
+
+---
+
+## What is Call Stack?
+
+```text
+Stack managing execution contexts using LIFO.
+```
+
+---
+
+## What is Lexical Environment?
+
+```text
+Local memory + reference to outer scope.
+```
+
+---
+
+## When is FEC created?
+
+```text
+Whenever a function is invoked.
+```
+
+---
+
+## What happens after FEC completes?
+
+```text
+It is removed from Call Stack.
+```
+
+---
+
+## Exception?
+
+```text
+Closures can preserve memory.
+```
+
+---
+
+# 🚀 Quick Revision
+
+```text
+Execution Context
+
+↓
+
+Memory Phase
+
+↓
+
+Hoisting
+
+↓
+
+Code Execution
+
+↓
+
+Function Calls
+
+↓
+
+Call Stack
+
+↓
+
+Lexical Scope
+
+↓
+
+Closures
+```
+
+---
+
+# 💡 Memory Trick
+
+```text
+MECAL
+
+Memory Phase
+
+Execution Phase
+
+Call Stack
+
+Activation (FEC)
+
+Lexical Scope
+```
+
+---
+
+# 🏆 Most Important Topics
+
+⭐⭐⭐ Call Stack
+
+⭐⭐⭐ Hoisting
+
+⭐⭐⭐ TDZ
+
+⭐⭐⭐ Function Execution Context
+
+⭐⭐⭐ Closures
+
+> 🎯 **Golden Rule:**  
+> Every JavaScript program starts with a **Global Execution Context**, and every function call creates a **new Function Execution Context** that is managed by the **Call Stack**.

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DOM Content Manipulation Methods Demo</title>
+
+  <style>
+    body {
+      font-family: Arial;
+      background: #f5f6fa;
+      padding: 40px;
+    }
+
+    h2 {
+      margin-bottom: 5px;
+    }
+
+    .box {
+      padding: 15px;
+      border: 2px solid #4a90e2;
+      border-radius: 8px;
+      background: #fff;
+      margin-bottom: 20px;
+    }
+
+    button {
+      padding: 8px 14px;
+      margin: 6px 4px;
+      border: none;
+      background: #4a90e2;
+      color: #fff;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      background: #357ad4;
+    }
+
+    code {
+      background: #eee;
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
+
+    hr {
+      margin: 20px 0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>🔥 DOM Content Manipulation — innerHTML, outerHTML, remove(), replaceWith() & More</h1>
+
+  <!-- ============================================================
+        1️⃣ innerHTML / textContent / innerText
+    ============================================================ -->
+  <div class="box">
+    <h2>1. innerHTML • textContent • innerText</h2>
+
+    <div id="contentBox" style="padding:12px; border:1px solid #ccc;">
+      This is <b>original</b> content.
+    </div>
+
+    <button onclick="demoInnerHTML()">innerHTML</button>
+    <button onclick="demoTextContent()">textContent</button>
+    <button onclick="demoInnerText()">innerText</button>
+  </div>
+
+  <hr>
+
+  <!-- ============================================================
+        2️⃣ outerHTML demo
+    ============================================================ -->
+  <div class="box">
+    <h2>2. outerHTML (replace entire element)</h2>
+
+    <div id="outerDemo" style="padding:12px; border:1px solid #aaa;">
+      Replace this entire box using outerHTML
+    </div>
+
+    <button onclick="demoOuterHTML()">outerHTML Replace</button>
+  </div>
+
+  <hr>
+
+  <!-- ============================================================
+        3️⃣ remove() demo
+    ============================================================ -->
+  <div class="box">
+    <h2>3. remove() — delete element</h2>
+
+    <p id="removeDemo">This text will be removed when you click.</p>
+
+    <button onclick="demoRemove()">remove()</button>
+  </div>
+
+  <hr>
+
+  <!-- ============================================================
+        4️⃣ replaceWith()
+    ============================================================ -->
+  <div class="box">
+    <h2>4. replaceWith() — replace element with another</h2>
+
+    <p id="replaceDemo">Original element to be replaced</p>
+
+    <button onclick="demoReplaceWith()">replaceWith()</button>
+  </div>
+
+  <hr>
+
+  <!-- ============================================================
+        5️⃣ insertAdjacentHTML()
+    ============================================================ -->
+  <div class="box">
+    <h2>5. insertAdjacentHTML()</h2>
+
+    <div id="adjDemo" style="padding:12px; border:1px solid #444;">
+      Target Box
+    </div>
+
+    <button onclick="insertHTMLBeforeBegin()">beforebegin</button>
+    <button onclick="insertHTMLAfterBegin()">afterbegin</button>
+    <button onclick="insertHTMLBeforeEnd()">beforeend</button>
+    <button onclick="insertHTMLAfterEnd()">afterend</button>
+  </div>
+
+  <hr>
+
+  <!-- ============================================================
+        6️⃣ append(), prepend(), before(), after()
+    ============================================================ -->
+  <div class="box">
+    <h2>6. append • prepend • before • after</h2>
+
+    <div id="apDemo" style="padding:12px; border:1px solid #000;">
+      Base Element
+    </div>
+
+    <button onclick="demoAppend()">append()</button>
+    <button onclick="demoPrepend()">prepend()</button>
+    <button onclick="demoBefore()">before()</button>
+    <button onclick="demoAfter()">after()</button>
+  </div>
+
+  <hr>
+
+  <!-- ============================================================
+        7️⃣ replaceChild() old method
+    ============================================================ -->
+  <div class="box">
+    <h2>7. replaceChild() — old DOM method</h2>
+
+    <div id="parentRC">
+      <p id="oldChild">Old child to replace</p>
+    </div>
+
+    <button onclick="demoReplaceChild()">replaceChild()</button>
+  </div>
+
+  <!-- ============================================================
+        JS Code
+    ============================================================ -->
+  <script>
+
+    // ============================================================
+    // 1) innerHTML
+    // ============================================================
+    function demoInnerHTML() {
+      const box = document.getElementById("contentBox");
+      box.innerHTML = "Changed using <b>innerHTML</b> 🎉";
+    }
+
+    // textContent removes HTML formatting
+    function demoTextContent() {
+      const box = document.getElementById("contentBox");
+      box.textContent = "Changed using <textContent> -- shows raw text <b>not bold</b>";
+    }
+
+    function demoInnerText() {
+      const box = document.getElementById("contentBox");
+      box.innerText = "Changed using innerText (respects CSS, hides hidden text)";
+    }
+
+    // ============================================================
+    // 2) outerHTML
+    // ============================================================
+    function demoOuterHTML() {
+      const el = document.getElementById("outerDemo");
+      el.outerHTML = `<h3 style="color:green;">✔ This replaced the entire element using outerHTML</h3>`;
+    }
+
+    // ============================================================
+    // 3) remove()
+    // ============================================================
+    function demoRemove() {
+      const el = document.getElementById("removeDemo");
+      el.remove();
+    }
+
+    // ============================================================
+    // 4) replaceWith()
+    // ============================================================
+    function demoReplaceWith() {
+      const el = document.getElementById("replaceDemo");
+      const newNode = document.createElement("h3");
+      newNode.textContent = "Element replaced using replaceWith() ✔";
+      el.replaceWith(newNode);
+    }
+
+    // ============================================================
+    // 5) insertAdjacentHTML()
+    // ============================================================
+    function insertHTMLBeforeBegin() {
+      adjDemo.insertAdjacentHTML("beforebegin", "<p>➡ beforebegin</p>");
+    }
+
+    function insertHTMLAfterBegin() {
+      adjDemo.insertAdjacentHTML("afterbegin", "<p>➡ afterbegin</p>");
+    }
+
+    function insertHTMLBeforeEnd() {
+      adjDemo.insertAdjacentHTML("beforeend", "<p>➡ beforeend</p>");
+    }
+
+    function insertHTMLAfterEnd() {
+      adjDemo.insertAdjacentHTML("afterend", "<p>➡ afterend</p>");
+    }
+
+    // ============================================================
+    // 6) append / prepend / before / after
+    // ============================================================
+    function demoAppend() {
+      apDemo.append("👉 appended text");
+    }
+
+    function demoPrepend() {
+      apDemo.prepend("👈 prepended text ");
+    }
+
+    function demoBefore() {
+      apDemo.before("⬆ inserted BEFORE element ");
+    }
+
+    function demoAfter() {
+      apDemo.after("⬇ inserted AFTER element ");
+    }
+
+    // ============================================================
+    // 7) replaceChild()
+    // ============================================================
+    function demoReplaceChild() {
+      const parent = document.getElementById("parentRC");
+      const old = document.getElementById("oldChild");
+
+      const newEl = document.createElement("h4");
+      newEl.textContent = "New Child Replaced using replaceChild()";
+
+      parent.replaceChild(newEl, old);
+    }
+  </script>
+
+</body>
+
+</html>

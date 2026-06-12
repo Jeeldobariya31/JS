@@ -1,415 +1,759 @@
-# Numbers and Math in JavaScript
+# 📘 JavaScript Numbers & Math Object
 
-## Overview
-Comprehensive guide to working with numbers and the Math object in JavaScript.
+JavaScript has only **one number type**:
 
-## Number Basics
+```text
+IEEE 754 Double-Precision Floating Point
+(64-bit)
+```
 
-### Creating Numbers
+It represents:
+
+- ✅ Integers
+- ✅ Floating-point numbers
+- ✅ Scientific notation
+
+> **Note:** JavaScript does NOT have separate `int`, `float`, or `double` types.
+
+---
+
+# 🔢 Creating Numbers
+
+## 1. Using Number Literals
+
 ```javascript
 let integerNum = 100;
 let floatNum = 99.99;
-let constructorNum = new Number(123.45);  // Number object
+
+console.log(integerNum);
+console.log(floatNum);
 ```
 
-### Basic Arithmetic Operations
+### Output
+
+```text
+100
+99.99
+```
+
+---
+
+## 2. Using Number Constructor
+
+```javascript
+let constructorNum = new Number(123.45);
+
+console.log(constructorNum.valueOf());
+```
+
+### Output
+
+```text
+123.45
+```
+
+⚠️ Avoid:
+
+```javascript
+new Number(100)
+```
+
+Because it creates an **object**.
+
+Preferred:
+
+```javascript
+let num = 100;
+```
+
+---
+
+# ➕ Number Operations
+
 ```javascript
 let a = 10;
 let b = 3;
-
-a + b       // 13 (addition)
-a - b       // 7 (subtraction)
-a * b       // 30 (multiplication)
-a / b       // 3.333... (division)
-a % b       // 1 (modulus/remainder)
-a ** b      // 1000 (exponentiation)
 ```
 
-### Increment and Decrement
+| Operation | Example | Output |
+|-----------|----------|---------|
+| Addition | `a + b` | `13` |
+| Subtraction | `a - b` | `7` |
+| Multiplication | `a * b` | `30` |
+| Division | `a / b` | `3.3333...` |
+| Modulus | `a % b` | `1` |
+| Exponentiation | `a ** b` | `1000` |
+
+---
+
+# 🔼 Increment & Decrement
+
+## Increment (`++`)
+
 ```javascript
 let num = 5;
-num++;      // Post-increment: returns 5, then increments
-++num;      // Pre-increment: increments, then returns 6
-num--;      // Post-decrement
---num;      // Pre-decrement
+
+num++;
+
+console.log(num);
 ```
 
-## Number Methods
+### Output
 
-### Formatting Methods
+```text
+6
+```
 
-#### toFixed(digits)
-Formats number with fixed decimal places
+---
+
+## Decrement (`--`)
 
 ```javascript
-let num = 45.6789;
-num.toFixed(2)      // "45.68"
-num.toFixed(0)      // "46"
+let num = 5;
+
+num--;
+
+console.log(num);
 ```
 
-#### toPrecision(length)
-Formats number to specified length
+### Output
+
+```text
+4
+```
+
+---
+
+# 🔧 Number Methods
 
 ```javascript
-let num = 45.6789;
-num.toPrecision(4)  // "45.68"
-num.toPrecision(6)  // "45.6789"
+let sampleNum = 45.6789;
 ```
 
-#### toExponential(digits)
-Returns exponential notation
+---
+
+## 1. `toFixed()`
+
+Rounds to fixed decimal places.
 
 ```javascript
-let num = 45.6789;
-num.toExponential(2)    // "4.57e+1"
+console.log(sampleNum.toFixed(2));
 ```
 
-### String Conversion
+### Output
 
-#### toString()
-Converts number to string
+```text
+45.68
+```
+
+---
+
+## 2. `toPrecision()`
+
+Specifies total digits.
 
 ```javascript
-let num = 45.6789;
-num.toString()      // "45.6789"
-num.toString(2)     // Binary representation
-num.toString(8)     // Octal representation
-num.toString(16)    // Hexadecimal representation
+console.log(sampleNum.toPrecision(4));
 ```
 
-#### toLocaleString()
-Locale-specific number representation
+### Output
+
+```text
+45.68
+```
+
+---
+
+## 3. `toString()`
+
+Converts number into string.
 
 ```javascript
-let num = 45.6789;
-num.toLocaleString()                // "45.6789" (depends on locale)
-num.toLocaleString('en-US')         // "45.6789"
-num.toLocaleString('de-DE')         // "45,6789"
-num.toLocaleString('ja-JP')         // "45.6789"
+console.log(sampleNum.toString());
 ```
 
-### Currency Formatting
-```javascript
-let num = 45.6789;
+### Output
 
-// US Dollar
-num.toLocaleString('en-US', { style: 'currency', currency: 'USD' })  // "$45.68"
-
-// Euro
-num.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })  // "45,68 €"
-
-// British Pound
-num.toLocaleString('en-GB', { style: 'currency', currency: 'GBP' })  // "£45.68"
-
-// Indian Rupee
-num.toLocaleString('hi-IN', { style: 'currency', currency: 'INR' })  // "₹45.68"
+```text
+"45.6789"
 ```
 
-## Number Properties
+---
 
-### Constants
-```javascript
-Number.MAX_VALUE                // 1.7976931348623157e+308 (largest number)
-Number.MIN_VALUE                // 5e-324 (smallest positive number)
-Number.MAX_SAFE_INTEGER         // 9007199254740991 (largest safe integer)
-Number.MIN_SAFE_INTEGER         // -9007199254740991 (smallest safe integer)
-Number.POSITIVE_INFINITY        // Infinity
-Number.NEGATIVE_INFINITY        // -Infinity
-Number.NaN                      // Not-a-Number
-Number.EPSILON                  // 2.220446049250313e-16 (smallest difference)
-```
-
-## Number Static Methods
-
-### Parsing
-
-#### parseInt(string, radix)
-Parses string as integer
+### Different Bases
 
 ```javascript
-parseInt("123abc")      // 123
-parseInt("0xFF")        // 255 (hexadecimal)
-parseInt("101", 2)      // 5 (binary)
+console.log((10).toString(2));
+console.log((10).toString(8));
+console.log((10).toString(16));
 ```
 
-#### parseFloat(string)
-Parses string as floating-point number
+### Output
+
+```text
+1010
+12
+a
+```
+
+---
+
+## 4. `toExponential()`
+
+Scientific notation.
 
 ```javascript
-parseFloat("123.45abc")     // 123.45
-parseFloat("123.45xyz")     // 123.45
+console.log(sampleNum.toExponential(2));
 ```
 
-### Validation
+### Output
 
-#### isNaN(value)
-Checks if value is NaN
+```text
+4.57e+1
+```
+
+---
+
+## 5. `toLocaleString()`
+
+Locale-sensitive formatting.
 
 ```javascript
-isNaN('hello')          // true
-isNaN(123)              // false
+console.log(sampleNum.toLocaleString("en-US"));
 ```
 
-#### Number.isNaN(value)
-Strict NaN check (doesn't coerce)
+### Output
+
+```text
+45.679
+```
+
+---
+
+# 💰 Currency Formatting
+
+---
+
+## Indian Rupee
 
 ```javascript
-Number.isNaN(NaN)       // true
-Number.isNaN('hello')   // false
+console.log(
+    sampleNum.toLocaleString("en-IN", {
+        style: "currency",
+        currency: "INR"
+    })
+);
 ```
 
-#### isFinite(value)
-Checks if value is finite number
+### Output
+
+```text
+₹45.68
+```
+
+---
+
+## US Dollar
 
 ```javascript
-isFinite(1000)          // true
-isFinite(Infinity)      // false
-isFinite(NaN)           // false
+console.log(
+    sampleNum.toLocaleString("en-US", {
+        style: "currency",
+        currency: "USD"
+    })
+);
 ```
 
-#### Number.isFinite(value)
-Strict finite check (doesn't coerce)
+### Output
+
+```text
+$45.68
+```
+
+---
+
+## Japanese Yen
 
 ```javascript
-Number.isFinite(1000)   // true
-Number.isFinite('1000') // false
+console.log(
+    sampleNum.toLocaleString("ja-JP", {
+        style: "currency",
+        currency: "JPY"
+    })
+);
 ```
 
-#### Number.isInteger(value)
-Checks if value is integer
+### Output
+
+```text
+¥46
+```
+
+---
+
+# 📌 Number Properties
+
+---
+
+## Maximum Value
 
 ```javascript
-Number.isInteger(42)        // true
-Number.isInteger(42.5)      // false
-Number.isInteger(NaN)       // false
+console.log(Number.MAX_VALUE);
 ```
 
-#### Number.isSafeInteger(value)
-Checks if value is safe integer
+### Output
+
+```text
+1.7976931348623157e+308
+```
+
+---
+
+## Minimum Positive Value
 
 ```javascript
-Number.isSafeInteger(9007199254740991)      // true
-Number.isSafeInteger(9007199254740992)      // false
+console.log(Number.MIN_VALUE);
 ```
 
-## Math Object
+### Output
 
-### Math Properties (Constants)
-```javascript
-Math.PI             // 3.141592653589793
-Math.E              // 2.718281828459045 (Euler's number)
-Math.LN2            // 0.6931471805599453 (natural log of 2)
-Math.LN10           // 2.302585092994046 (natural log of 10)
-Math.LOG2E          // 1.4426950408889634
-Math.LOG10E         // 0.4342944819032518
-Math.SQRT2          // 1.4142135623730951
-Math.SQRT1_2        // 0.7071067811865476
+```text
+5e-324
 ```
 
-### Basic Math Methods
+---
 
-#### Math.abs(x)
-Absolute value
+## NaN
 
 ```javascript
-Math.abs(-10)       // 10
-Math.abs(5)         // 5
+console.log(Number.NaN);
 ```
 
-#### Math.round(x)
-Rounds to nearest integer
+### Output
+
+```text
+NaN
+```
+
+---
+
+## Infinity
 
 ```javascript
-Math.round(4.5)     // 5
-Math.round(4.4)     // 4
-Math.round(4.6)     // 5
+console.log(Number.POSITIVE_INFINITY);
+console.log(Number.NEGATIVE_INFINITY);
 ```
 
-#### Math.ceil(x)
-Rounds up
+### Output
+
+```text
+Infinity
+-Infinity
+```
+
+---
+
+## EPSILON
+
+Smallest precision difference.
 
 ```javascript
-Math.ceil(4.3)      // 5
-Math.ceil(4.1)      // 5
+console.log(Number.EPSILON);
 ```
 
-#### Math.floor(x)
-Rounds down
+### Output
+
+```text
+2.220446049250313e-16
+```
+
+---
+
+## Safe Integers
 
 ```javascript
-Math.floor(4.7)     // 4
-Math.floor(4.9)     // 4
+console.log(Number.MAX_SAFE_INTEGER);
+console.log(Number.MIN_SAFE_INTEGER);
 ```
 
-#### Math.trunc(x)
-Removes decimal part
+### Output
+
+```text
+9007199254740991
+-9007199254740991
+```
+
+---
+
+# 🌍 Global Number Functions
+
+---
+
+## `parseInt()`
 
 ```javascript
-Math.trunc(4.7)     // 4
-Math.trunc(-4.7)    // -4
+console.log(parseInt("123abc"));
 ```
 
-### Min and Max
+### Output
 
-#### Math.min(...)
-Returns smallest number
+```text
+123
+```
+
+---
+
+## `parseFloat()`
 
 ```javascript
-Math.min(1, 5, 3, -2)   // -2
+console.log(parseFloat("123.45abc"));
 ```
 
-#### Math.max(...)
-Returns largest number
+### Output
+
+```text
+123.45
+```
+
+---
+
+## `isNaN()`
 
 ```javascript
-Math.max(1, 5, 3, -2)   // 5
+console.log(isNaN("hello"));
+console.log(isNaN(123));
 ```
 
-### Power and Root
+### Output
 
-#### Math.pow(base, exponent)
-Raises base to exponent
+```text
+true
+false
+```
+
+---
+
+## `isFinite()`
 
 ```javascript
-Math.pow(2, 3)      // 8
-Math.pow(10, 2)     // 100
+console.log(isFinite(100));
+console.log(isFinite(Infinity));
 ```
 
-#### Math.sqrt(x)
-Square root
+### Output
+
+```text
+true
+false
+```
+
+---
+
+## `Number.isInteger()`
 
 ```javascript
-Math.sqrt(16)       // 4
-Math.sqrt(2)        // 1.414...
+console.log(Number.isInteger(42));
+console.log(Number.isInteger(42.5));
 ```
 
-#### Math.cbrt(x)
-Cube root (ES6)
+### Output
+
+```text
+true
+false
+```
+
+---
+
+## `Number.isSafeInteger()`
 
 ```javascript
-Math.cbrt(8)        // 2
-Math.cbrt(27)       // 3
+console.log(Number.isSafeInteger(9007199254740991));
 ```
 
-### Exponential and Logarithm
+### Output
 
-#### Math.exp(x)
-Returns e raised to power of x
+```text
+true
+```
+
+---
+
+# 🧮 Math Object
+
+The `Math` object provides mathematical constants and functions.
+
+---
+
+# 📌 Math Constants
+
+| Constant | Value |
+|-----------|--------|
+| `Math.PI` | 3.14159 |
+| `Math.E` | 2.71828 |
+| `Math.LN2` | ln(2) |
+| `Math.LN10` | ln(10) |
+| `Math.LOG2E` | log₂(e) |
+| `Math.LOG10E` | log₁₀(e) |
+| `Math.SQRT2` | √2 |
+| `Math.SQRT1_2` | √½ |
+
+---
+
+# 🔧 Important Math Methods
+
+---
+
+## Square Root
 
 ```javascript
-Math.exp(1)         // 2.718... (equals Math.E)
-Math.exp(2)         // 7.389...
+Math.sqrt(16);
 ```
 
-#### Math.expm1(x)
-Returns e^x - 1
+### Output
+
+```text
+4
+```
+
+---
+
+## Power
 
 ```javascript
-Math.expm1(1)       // 1.718... (e - 1)
+Math.pow(2, 3);
 ```
 
-#### Math.log(x)
-Natural logarithm (base e)
+### Output
+
+```text
+8
+```
+
+---
+
+## Absolute Value
 
 ```javascript
-Math.log(Math.E)    // 1
-Math.log(10)        // 2.302...
+Math.abs(-10);
 ```
 
-#### Math.log2(x)
-Base 2 logarithm
+### Output
+
+```text
+10
+```
+
+---
+
+## Rounding Methods
+
+| Method | Example | Output |
+|---------|----------|---------|
+| `Math.ceil()` | `4.3` | `5` |
+| `Math.floor()` | `4.7` | `4` |
+| `Math.round()` | `4.5` | `5` |
+| `Math.trunc()` | `4.9` | `4` |
+
+---
+
+# Maximum & Minimum
 
 ```javascript
-Math.log2(8)        // 3
-Math.log2(1)        // 0
+Math.max(1, 5, 3);
+Math.min(1, 5, 3);
 ```
 
-#### Math.log10(x)
-Base 10 logarithm
+### Output
+
+```text
+5
+1
+```
+
+---
+
+# 🎲 Random Numbers
 
 ```javascript
-Math.log10(100)     // 2
-Math.log10(1000)    // 3
+Math.random();
 ```
 
-#### Math.log1p(x)
-Returns natural log of 1 + x
+### Output
+
+```text
+0 ≤ number < 1
+```
+
+---
+
+## Random Integer
 
 ```javascript
-Math.log1p(1)       // 0.693... (ln(2))
+Math.floor(Math.random() * 10);
 ```
 
-### Trigonometric Functions
+### Output
 
-#### Math.sin(x), Math.cos(x), Math.tan(x)
-Sine, cosine, tangent (angle in radians)
+```text
+0 to 9
+```
+
+---
+
+# 📐 Trigonometry
 
 ```javascript
-Math.sin(Math.PI / 2)   // 1
-Math.cos(0)             // 1
-Math.tan(Math.PI / 4)   // 1
+Math.sin(Math.PI / 2);
+Math.cos(0);
+Math.tan(Math.PI / 4);
 ```
 
-#### Math.asin(x), Math.acos(x), Math.atan(x)
-Inverse trigonometric functions
+### Output
+
+```text
+1
+1
+1
+```
+
+---
+
+# 📊 Logarithms
 
 ```javascript
-Math.asin(1)        // 1.5707... (π/2)
-Math.acos(1)        // 0
-Math.atan(1)        // 0.7853... (π/4)
+Math.log(10);
+Math.log2(8);
+Math.log10(100);
 ```
 
-#### Math.atan2(y, x)
-Arc tangent of y/x
+### Output
+
+```text
+2.302585...
+3
+2
+```
+
+---
+
+# 🔺 Other Useful Methods
+
+| Method | Purpose |
+|---------|----------|
+| `Math.cbrt()` | Cube Root |
+| `Math.hypot()` | Distance Formula |
+| `Math.sign()` | Sign of Number |
+| `Math.imul()` | 32-bit Multiplication |
+| `Math.fround()` | 32-bit Float |
+| `Math.exp()` | eˣ |
+| `Math.expm1()` | eˣ − 1 |
+
+---
+
+# 🎯 User Defined Methods
+
+---
+
+## Round to Decimal Places
 
 ```javascript
-Math.atan2(1, 1)    // 0.7853... (π/4)
+Math.roundTo = function(num, places) {
+    let factor = Math.pow(10, places);
+
+    return Math.round(num * factor) / factor;
+};
 ```
 
-### Hyperbolic Functions
+### Example
 
 ```javascript
-Math.sinh(1)        // 1.1752...
-Math.cosh(1)        // 1.5430...
-Math.tanh(1)        // 0.7615...
-Math.asinh(1)       // 0.8813...
-Math.acosh(2)       // 1.3169...
-Math.atanh(0.5)     // 0.5493...
+Math.roundTo(4.56789, 2);
 ```
 
-### Random Number
+### Output
 
-#### Math.random()
-Returns random number between 0 (inclusive) and 1 (exclusive)
+```text
+4.57
+```
+
+---
+
+## Random Integer Generator
 
 ```javascript
-Math.random()                           // 0.123... (varies)
-Math.floor(Math.random() * 10)          // Random 0-9
-Math.floor(Math.random() * (max - min)) + min  // Random between min and max
+Math.randomInt = function(min, max) {
+    return Math.floor(
+        Math.random() * (max - min)
+    ) + min;
+};
 ```
 
-### Other Methods
-
-#### Math.sign(x)
-Returns sign of number (-1, 0, or 1)
+### Example
 
 ```javascript
-Math.sign(-5)       // -1
-Math.sign(0)        // 0
-Math.sign(5)        // 1
+Math.randomInt(1, 10);
 ```
 
-#### Math.hypot(...values)
-Square root of sum of squares
+### Output
+
+```text
+1 to 9
+```
+
+---
+
+# 📊 Quick Summary
+
+| Topic | Important Methods |
+|---------|-------------------|
+| Number Formatting | `toFixed()`, `toPrecision()` |
+| Conversion | `toString()` |
+| Parsing | `parseInt()`, `parseFloat()` |
+| Validation | `isNaN()`, `isFinite()` |
+| Integer Checks | `Number.isInteger()` |
+| Rounding | `ceil()`, `floor()`, `round()` |
+| Random | `Math.random()` |
+| Power | `pow()`, `sqrt()` |
+| Trigonometry | `sin()`, `cos()`, `tan()` |
+
+---
+
+# 📝 Exam Important Points
+
+✅ JavaScript uses **IEEE 754 double precision** numbers.
+
+✅ `NaN !== NaN`
 
 ```javascript
-Math.hypot(3, 4)    // 5 (√(9+16) = √25)
+Number.isNaN(value);
 ```
 
-## Best Practices
-- Use `Number.isNaN()` instead of `isNaN()` for strict checking
-- Use `Math.floor()` with `Math.random()` for random integers
-- Be aware of floating-point precision issues
-- Use `toFixed()` for displaying currency
-- Use `Number.MAX_SAFE_INTEGER` check for large numbers
-- Prefer `toLocaleString()` for user-facing number display
+✅ Safe integer range:
+
+```text
+-9007199254740991
+to
+9007199254740991
+```
+
+✅ `Math.random()` generates:
+
+```text
+0 ≤ x < 1
+```
+
+---
+
+## 🚀 Memory Trick
+
+```text
+C F R T
+
+Ceil   → Up
+Floor  → Down
+Round  → Nearest
+Trunc  → Remove Decimal
+```
+
+ 

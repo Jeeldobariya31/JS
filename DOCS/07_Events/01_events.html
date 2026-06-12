@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+        <!-- ===========================
+         HTML5 BASIC SETUP
+    ============================ -->
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>JS Events Master Demo - Jeel</title>
+
+        <style>
+                body {
+                        font-family: Arial, sans-serif;
+                        background: #eef2f7;
+                        margin: 0;
+                        padding: 30px;
+                }
+
+                h1 {
+                        margin-top: 0;
+                }
+
+                .section {
+                        background: #ffffff;
+                        border-radius: 10px;
+                        padding: 16px;
+                        margin-bottom: 18px;
+                        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+                }
+
+                h2 {
+                        margin: 0 0 6px;
+                        color: #333;
+                }
+
+                button {
+                        padding: 8px 14px;
+                        border-radius: 6px;
+                        border: none;
+                        background: #4a90e2;
+                        color: #fff;
+                        cursor: pointer;
+                        margin: 4px;
+                        font-size: 14px;
+                        transition: 0.2s;
+                }
+
+                button:hover {
+                        background: #357ad4;
+                }
+
+                input {
+                        padding: 8px;
+                        border-radius: 6px;
+                        border: 2px solid #4a90e2;
+                        outline: none;
+                        margin: 4px 0;
+                }
+
+                input:focus {
+                        box-shadow: 0 0 4px rgba(74, 144, 226, 0.6);
+                }
+
+                .log-box {
+                        background: #111;
+                        color: #0f0;
+                        padding: 10px;
+                        border-radius: 6px;
+                        min-height: 90px;
+                        font-family: "Consolas", monospace;
+                        white-space: pre-wrap;
+                        overflow-y: auto;
+                }
+
+                .bubble-parent {
+                        padding: 16px;
+                        background: #bbdefb;
+                        border-radius: 8px;
+                }
+
+                .bubble-child {
+                        margin-top: 10px;
+                        padding: 16px;
+                        background: #e3f2fd;
+                        border-radius: 8px;
+                }
+
+                ul#delegate-list {
+                        padding-left: 18px;
+                }
+
+                ul#delegate-list li {
+                        cursor: pointer;
+                        padding: 4px 0;
+                }
+        </style>
+</head>
+
+<body>
+        <h1>🔥 JavaScript Events Master Demo (Jeel)</h1>
+        <p>Open DevTools → Console for extra logs. All theory is in the JS file.</p>
+
+        <!-- 0️⃣ LOG AREA -->
+        <div class="section">
+                <h2>0️⃣ Event Log (Output)</h2>
+                <div id="log" class="log-box"></div>
+        </div>
+
+        <!-- 1️⃣ CLICK / MOUSE EVENTS -->
+        <div class="section">
+                <h2>1️⃣ Mouse Events (click, dblclick, contextmenu, mousemove)</h2>
+                <button id="btn-click">Click Me</button>
+                <button id="btn-dblclick">Double Click Me</button>
+                <button id="btn-right">Right Click Me</button>
+
+                <div id="mouse-area"
+                        style="margin-top: 10px; height: 80px; background:#ddd; border-radius:8px; padding:10px;">
+                        Move mouse here (mousemove)
+                </div>
+        </div>
+
+        <!-- 2️⃣ KEYBOARD EVENTS -->
+        <div class="section">
+                <h2>2️⃣ Keyboard Events (keydown, keyup)</h2>
+                <input type="text" id="key-input" placeholder="Type something..." />
+        </div>
+
+        <!-- 3️⃣ INPUT / CHANGE / FORM -->
+        <div class="section">
+                <h2>3️⃣ Input / Change / Submit</h2>
+                <input type="text" id="name-input" placeholder="input & change demo" /><br />
+                <form id="demo-form" style="margin-top:8px;">
+                        <input type="text" name="username" placeholder="Form username" />
+                        <button type="submit">Submit</button>
+                </form>
+        </div>
+
+        <!-- 4️⃣ FOCUS EVENTS -->
+        <div class="section">
+                <h2>4️⃣ Focus / Blur Events</h2>
+                <input type="text" id="focus-input" placeholder="Click here (focus/blur)" />
+        </div>
+
+        <!-- 5️⃣ BUBBLING vs CAPTURING -->
+        <div class="section">
+                <h2>5️⃣ Event Bubbling & Capturing</h2>
+                <p>Click on child to see parent & child logs.</p>
+                <div id="bubble-parent" class="bubble-parent">
+                        Parent (bubble-parent)
+                        <div id="bubble-child" class="bubble-child">
+                                Child (bubble-child)
+                        </div>
+                </div>
+        </div>
+
+        <!-- 6️⃣ EVENT DELEGATION -->
+        <div class="section">
+                <h2>6️⃣ Event Delegation Example</h2>
+                <p>Click on any list item. Only UL has event listener.</p>
+                <ul id="delegate-list">
+                        <li class="del-item">Item A</li>
+                        <li class="del-item">Item B</li>
+                        <li class="del-item">Item C</li>
+                </ul>
+                <button id="add-del-item">Add new delegated item</button>
+        </div>
+
+        <!-- 7️⃣ CUSTOM EVENT DEMO -->
+        <div class="section">
+                <h2>7️⃣ Custom Event (CustomEvent)</h2>
+                <button id="btn-custom">Dispatch Custom "greet" Event</button>
+                <p id="custom-output">Waiting for custom event...</p>
+        </div>
+
+        <!-- JS FILE WITH FULL THEORY + CODE -->
+        <script src="02_events.js" defer></script>
+</body>
+
+</html>
