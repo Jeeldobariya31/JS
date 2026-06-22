@@ -23,20 +23,39 @@ let fruits = ["Apple", "Banana", "Cherry"];
 ---
 
 # 🏗️ Creating Arrays
-
+### Using Array Literals
 ```javascript
 let fruits = ["Apple", "Banana", "Cherry"];
 ```
-
+### Using Array Constructor
 ```javascript
-let numbers = [1, 2, 3];
+let numbers = new Array(1, 2, 3);
 ```
-
+### mixed Data Types
 ```javascript
 let mixed = [42, "Hello", true, null];
 ```
+### Using Array.of()
+```javascript
+let numbers = Array.of(1, 2, 3);
+```
+### Using Array.from()
+```javascript
+let strArray = Array.from("Hello");
+```
+### Empty Array
+```javascript
+let empty = [];
+```
+we can also add ele after creating an empty array:
+```javascript
+let empty = [];
+empty[0]=1;
+empty[1]=2;
+```
 
 ---
+
 
 # 🔍 Accessing Elements
 
