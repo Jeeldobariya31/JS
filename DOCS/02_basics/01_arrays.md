@@ -24,10 +24,12 @@ let fruits = ["Apple", "Banana", "Cherry"];
 
 # 🏗️ Creating Arrays
 ### Using Array Literals
+Use square brackets `[]` to create an array.
 ```javascript
 let fruits = ["Apple", "Banana", "Cherry"];
 ```
 ### Using Array Constructor
+Use `new Array()` to create an array.
 ```javascript
 let numbers = new Array(1, 2, 3);
 ```
@@ -36,10 +38,12 @@ let numbers = new Array(1, 2, 3);
 let mixed = [42, "Hello", true, null];
 ```
 ### Using Array.of()
+Used to create an array from a list of arguments.
 ```javascript
 let numbers = Array.of(1, 2, 3);
 ```
 ### Using Array.from()
+Used to create an array from an iterable object (like a string or Set).
 ```javascript
 let strArray = Array.from("Hello");
 ```
