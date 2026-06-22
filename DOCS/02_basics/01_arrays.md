@@ -1,6 +1,6 @@
 # 📘 JavaScript Arrays
 
-Arrays are used to store **multiple values in a single variable**.
+Arrays are used to store **multiple values (of any type, also mixed) in a single variable**.
 
 ```javascript
 let fruits = ["Apple", "Banana", "Cherry"];
@@ -46,6 +46,20 @@ let numbers = Array.of(1, 2, 3);
 Used to create an array from an iterable object (like a string or Set).
 ```javascript
 let strArray = Array.from("Hello");
+```
+### Using Split()
+Used to create an array from a string by splitting it at a specified separator.
+```javascript
+let str = "Jeel";
+let strArray = str.split("");
+//check type of strArray
+document.write(typeof(strArray)); 
+document.write(strArray);
+```
+#### Output
+```text
+object
+"J", "e", "e", "l"
 ```
 ### Empty Array
 ```javascript
